@@ -1,0 +1,33 @@
+{% extends "es/base.html" %}
+
+{% block content %}
+<!-- Main Titles -->
+<div class="style-jumbo mb-5">
+	<div class="jumbotron text-center mb-3 shadow-lg">
+		<h2 class="display-4">{{ current_user.first_name.capitalize() }},</h2>
+		<p class="lead">Hoy es {{ dates['today'].strftime("%d") }} de {{ dates['today'].strftime("%B, %Y").capitalize() }}</p>
+		<p class="lead">Hace {{ dates['days_alive'] }} dias que estas vivo</p>
+		<p class="lead">Hoy estamos en el Cuadrante {{ dates['quad'] }}</p>
+		<p class="lead">La vuelta vigente es la {{ dates['round'] }}</p>
+	</div>
+</div>
+{% if not dates['is_rof'] %}
+    <!-- Quadrant tab navigation -->
+    <nav>
+    	<div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
+    		<a class="nav-item nav-link active" id="q1-tab" data-toggle="tab" href="#q1" role="tab" aria-controls="nav-home" aria-selected="true"><span>Q1</span></a>
+    		<a class="nav-item nav-link" id="q2-tab" data-toggle="tab" href="#q2" role="tab" aria-controls="nav-profile" aria-selected="false">Q2</a>
+    		<a class="nav-item nav-link" id="q3-tab" data-toggle="tab" href="#q3" role="tab" aria-controls="nav-contact" aria-selected="false">Q3</a>
+    		<a class="nav-item nav-link" id="q4-tab" data-toggle="tab" href="#q4" role="tab" aria-controls="nav-contact" aria-selected="false">Q4</a>
+    	</div>
+    </nav> <!-- navigation tabs -->
+    <div class="tab-content" id="nav-tabContent">
+    	<div class="tab-pane fade show active" id="q1" role="tabpanel" aria-labelledby="q1-tab">{% include "es/_quadrant1.html" %}</div>
+    	<div class="tab-pane fade" id="q2" role="tabpanel" aria-labelledby="q2-tab">{% include "es/_quadrant2.html" %}</div>
+    	<div class="tab-pane fade" id="q3" role="tabpanel" aria-labelledby="q3-tab">{% include "es/_quadrant3.html" %}</div>
+    	<div class="tab-pane fade" id="q4" role="tabpanel" aria-labelledby="q4-tab">{% include "es/_quadrant4.html" %}</div>
+    </div> <!-- .tab-content -->
+{% else %}
+    <h2>Anillo de Fuego, dia del año {{dates['daynbr']}}</h2>
+{% endif %}
+{% endblock %}

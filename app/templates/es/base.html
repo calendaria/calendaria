@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
+	<!-- Google Fonts and icons -->
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Custom CSS and JS -->
+	<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" type="text/css">
+	{% if title %}
+		<title>{{ title }} - Calendaria</title>
+	{% else %}
+		<title>Bienvenido a Calendaria</title>
+	{% endif %}
+</head>
+
+<body class="bg-light">
+	<!-- NavBar -->
+	<nav class="navbar navbar-expand-md navbar-dark sticky-top" style="background-color: #004D40;">
+		<div class="container">
+			<!-- Brand -->
+			<a class="navbar-brand" href="{{ url_for('index') }}">Calendaria</a>
+
+			<!-- Toggler/collapsibe Button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<!-- Navbar links -->
+			<div class="collapse navbar-collapse ml-auto" id="collapsibleNavbar">
+				<ul class="navbar-nav ml-auto">
+					{% if current_user.is_anonymous %}
+						<li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Ingresar</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Registrarse</a></li>
+					{% else %}
+						<li class="nav-item active"><span class="navbar-text ml-auto">Hola, <a href="{{ url_for('profile', user_id=current_user.id) }}">{{ current_user.first_name.capitalize() }}</a></span></li>
+						<li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Salir</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav> <!-- .navbar -->
+	<!-- Main Content -->
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+			{% if "invalid" in message.lower() %}
+				<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+					{{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% elif message.lower() == "please log in to access this page." %}
+			{% else %}
+				<div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+					{{ message }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	{% endwith %}
+	<div class="container">
+		{% block content %}{% endblock %}
+	</div> <!-- .container -->
+
+	<!-- JavaScript for Bootstrap, Jquery and Ajax -->
+
+	{% block scripts %}
+		<!-- <script src="{{ url_for('static',filename='js/moment.js') }}"></script> -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		{{ moment.include_moment() }}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		{% include "es/js.html" %}
+	{% endblock %}
+</body>
+<!-- Footer -->
+{% block footer %}
+<footer class="page-footer font-small pt-2 pb-1" id="footer" style="background-color: #004D40; color: white; text-align: center; font-size: 0.8em;">
+    <div class="container text-center">
+        <p>Alguna pregunta, incoveniente o sugerencia? Por favor contactenos a nuestro correo calendariasup@gmail.com</p>
+    </div>
+</footer>
+{% endblock %}
+</html>

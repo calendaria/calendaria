@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Profile -->
+<div class="mt-3">
+    <h2>TZ String: {{tz_str}}</h2>
+    <h2>Local Date: {{local_date.strftime('%d-%b-%Y')}}</h2>
+    <h2>Other Date: {{other_date.strftime('%d-%b-%Y')}}</h2>
+</div>
+</form>
+
+{% endblock %}

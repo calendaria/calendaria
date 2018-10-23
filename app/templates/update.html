@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Login -->
+<div class="mt-3">
+	<h3>Update your information below:</h3>
+</div>
+<div class="row h-100 mt-5 mb-5">
+	<div class="col-6 col-md-4">
+		<form action="" method="post" role="form" novalidate>
+			{{ form.hidden_tag() }}
+			<div class="form-group">
+				<div class="text-left"><label for="update-email">{{ form.email.label }}</label></div>
+					{{ form.email(value=current_user.email) }}
+					<div>
+						{% for error in form.email.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left">
+						<label for="update-fname">{{ form.first_name.label }}</label>
+						{{ form.first_name(value=current_user.first_name) }}
+					</div>
+					<div>
+						{% for error in form.first_name.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left"><label for="update-bdate">{{ form.dob.label }}</label></div>
+					<div class="input-group">
+						{{ form.dob(value=current_user.dob.strftime("%m/%d/%Y")) }}
+						<div class="input-group-append">
+								<span class="input-group-text"><i class="material-icons">date_range</i></span>
+						</div>
+					</div>
+					<div>
+						{% for error in form.dob.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+               		<button type="submit" class="btn btn-info btn-lg btn-block" id="edit-button">Update</button>
+            	</div>
+        	</div>
+		</form>
+	</div>
+</div>
+{% endblock %}
