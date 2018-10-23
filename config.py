@@ -32,3 +32,4 @@ class Config(object):
 	LANGUAGES = ['en', 'en_US', 'es', 'es_ES', 'es_AR']
 	IPSTACK_API_KEY = os.environ.get('IPSTACK_API_KEY')
 
+

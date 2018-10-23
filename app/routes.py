@@ -253,7 +253,7 @@ def reset_password_request():
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
 		if user:
-			sendgrid_password_reset_email(user, loc)
+			sendgrid_password_reset_email(user, lang)
 		flash('Check your email for the instructions to reset your password')
 		return redirect(url_for('login'))
 	return render_template('reset_password_request.html', title='Reset Password', form=form)
@@ -271,7 +271,7 @@ def reset_password_request_es():
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
 		if user:
-			sendgrid_password_reset_email(user, loc)
+			sendgrid_password_reset_email(user, lang)
 		flash('Se han enviado instrucciones a su correo para actualizar la contrasena.')
 		return redirect(url_for('login'))
 	return render_template('es/reset_password_request.html', title='Actualizar Contrasena', form=form)

@@ -37,16 +37,16 @@ def send_password_reset_email(user, loc):
 
 
 # Send email via sendgrid (we are going to use this one)
-def sendgrid_password_reset_email(user, loc):
+def sendgrid_password_reset_email(user, lang):
 	token = user.get_reset_password_token()
-	if 'es' in loc.lower():
+	if 'es' in lang.lower():
 		title = '[Calendaria] Actualice su contraseña'
 		body = user.first_name + ",\n"
 		body += '\n\nPara actualizar su contraseña haga click en el siguiente link:\n'
 		body += '\n' + str(url_for('reset_password_es', token=token, _external=True))
 		body += '\n\nSi ud. no ha solicitado un cambio de contraseña, puede ignorar este email.'
 		body += '\n\nSinceramente,'
-		body += '\nCalendaria Team'
+		body += '\n\nThe Calendaria Team'
 	else:
 		title = '[Calendaria] Reset your password'
 		body = 'Testing'
@@ -55,7 +55,7 @@ def sendgrid_password_reset_email(user, loc):
 		body += '\n' + str(url_for('reset_password', token=token, _external=True))
 		body += '\n\nIf you have not requested to change your password please disregard this email.'
 		body += '\n\nSincerely,'
-		body += '\nCalendaria Team'
+		body += '\n\nThe Calendaria Team'
 
 	sg = sendgrid.SendGridAPIClient(apikey=app.config['SENDGRID_API_KEY'])
 	from_email = Email('no-reply@calendaria.com')
