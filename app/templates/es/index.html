@@ -30,4 +30,8 @@
 {% else %}
     <h2>Anillo de Fuego, dia del año {{dates['daynbr']}}</h2>
 {% endif %}
+<!-- Export button -->
+<a href="{{url_for('download_csv')}}">
+	<button class="btn btn-outline-primary mt-2 mb-4" id="edit-button">Exportar</button>
+</a>
 {% endblock %}

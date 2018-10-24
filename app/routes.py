@@ -1,7 +1,9 @@
 from app import app, db, moment
 from app.models import User
-from flask import render_template, flash, redirect, url_for, request
-from app.forms import (LoginForm, LoginESForm, RegistrationForm, RegistrationESForm, UpdateProfileForm,
+from flask import (render_template, flash, redirect, url_for,
+    request, make_response, session)
+from app.forms import (LoginForm, LoginESForm, RegistrationForm,
+    RegistrationESForm, UpdateProfileForm,
 	UpdateProfileESForm, ResetPasswordForm, ResetPasswordESForm,
 	ResetPasswordRequestForm, ResetPasswordRequestESForm)
 from flask_login import current_user, login_user, logout_user, login_required
@@ -15,6 +17,8 @@ from tzlocal import get_localzone
 from app.util.tz_util import (get_location_dict, get_tz_str,
     get_tz, set_tz_date, set_tz_today)
 from app.util.web_util import choose_best_lang
+from app.util import export_utils
+import pyexcel as pe
 import requests
 import json
 
@@ -54,6 +58,8 @@ def index():
 	grid = date_utils.round_vals_from_date(dates['today'])
 	# Set title
 	title = current_user.first_name + " Home"
+	# Save date in session for export
+	session['date_str'] = dates['today'].strftime('%d-%b-%Y')
 	return render_template('index.html', title=title, dates=dates, grid=grid)
 
 
@@ -335,6 +341,28 @@ def reset_password_from_profile_es():
 		flash('Su contrasena ha sido modificada.')
 		return redirect(url_for('login'))
 	return render_template('es/reset_password.html', form=form)
+
+
+@app.route('/download_csv')
+def download_csv():
+    # Figure out language to export
+    lang = choose_best_lang(request, SUP_LANGUAGES)
+    # There's a bug in this and sometimes lang come out as None (need to fix)
+    if not lang:
+        lang = 'en'
+    elif 'es' in lang.lower():
+        lang = 'es'
+    else:
+        lang = 'en'
+    # Create the data for export based on the date of the previous request
+    w_date = datetime.strptime(session['date_str'], '%d-%b-%Y')
+    data = export_utils.create_export_data(w_date, lang)
+    sheet = pe.Sheet(data)
+	# Create the http response to export
+    output = make_response(sheet.csv)
+    output.headers["Content-Disposition"] = "attachment; filename=calendaria.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 
 # Test view
