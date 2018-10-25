@@ -1,12 +1,12 @@
 from datetime import timedelta, date
 
 # Generate a spanish version of the week day names
-ES_WEEKDAYS = ["Domingo", 
-			   "Lunes", 
-			   "Martes", 
-			   "Miercoles", 
-			   "Jueves", 
-			   "Viernes", 
+ES_WEEKDAYS = ["Domingo",
+			   "Lunes",
+			   "Martes",
+			   "Miercoles",
+			   "Jueves",
+			   "Viernes",
 			   "Sabado"]
 
 # Dictionary with steps
@@ -27,7 +27,7 @@ STEPS = {
 		14: "IN",
 		15: "HU",
 		16: "CO"
-		}
+}
 
 
 # Days difference between 2 dates
@@ -40,7 +40,7 @@ def daynbr(indate):
 		return indate.timetuple().tm_yday
 	except:
 		return "Invalid input"
-  
+
 # Return the week number
 def weeknbr(indate):
 	if daynbr(indate)%7 == 0:
@@ -58,25 +58,35 @@ def round_nbr(indate):
 		return int(daynbr(indate)/16) + 1
 	else:
 		return int(daynbr(indate)/16)
-	
+
 # Round day
 def round_day_nbr(indate):
 	if daynbr(indate)%16 != 0:
 		return int(daynbr(indate)%16)
 	else:
 		return 16
-	
+
 # Quadrant
 def quadrant(indate):
 	if daynbr(indate)%4 != 0:
 		return int(round_day_nbr(indate)/4) + 1
 	else:
 		return int(round_day_nbr(indate)/4)
-	
+
+def quadrant_name(indate, lang='es'):
+    quad = quadrant(indate)
+    quad_names = [
+        {'es': 'LOGICO', 'en': 'LOGIC'},
+        {'es': 'INHUMANO', 'en': 'INHUMAN'},
+        {'es': 'HUMANO', 'en': 'HUMAN'},
+        {'es': 'CONTEXTO', 'en': 'CONTEXT'},
+    ]
+    return quad_names[quad-1][lang]
+
 # Step name
 def step(indate):
 	return STEPS[round_day_nbr(indate)]
-	
+
 # Return day of the week (int) in spanish
 def weekday_str_es(indate):
 	return ES_WEEKDAYS[weekday(indate)]
@@ -164,12 +174,12 @@ def round_vals(rnd, year):
 	cal_dict['round_days'] = [i for i in range(1, 17)]
 	cal_dict['steps'] = [STEPS[i] for i in range(1, 17)]
 	cal_dict['round'] = [rnd for i in range(1, 17)]
-	
+
 	# Initialize the lists to put the different variables
 	dates, dates_str, day_nbr, week_nbr, weekday = [], [], [], [], []
 	freq_negs, gaps, gap_dates, gap_dates_str = [], [], [], []
 	cg_tot_days_, cg_, cg_day_ = [], [], []
-	fs_, au_, quads = [], [], []
+	fs_, au_, quads, quad_names_es = [], [], [], []
 
 	# Loop and check for the desired round
 	init = date(year, 1, 1)
@@ -200,6 +210,7 @@ def round_vals(rnd, year):
 			fs_ += [fs(curr_date)]
 			au_ += [au(curr_date)]
 			quads += [quadrant(curr_date)]
+			quad_names_es += [quadrant_name(curr_date)]
 
 	#Update the dictionary
 	cal_dict['dates'] = dates
@@ -217,7 +228,8 @@ def round_vals(rnd, year):
 	cal_dict['fs'] = fs_
 	cal_dict['au'] = au_
 	cal_dict['quads'] = quads
-	
+	cal_dict['quad_name_es'] = quad_names_es
+
 	# Return the dictionary
 	return cal_dict
 
@@ -225,7 +237,7 @@ def round_vals(rnd, year):
 def round_vals_from_date(indate):
 	rnd = round_nbr(indate)
 	yr = indate.year
-	
+
 	return round_vals(rnd, yr)
 
 
@@ -255,23 +267,23 @@ def quadrant_n_vals(indate, quad_n):
 	# Return the quadrant dict
 	return quad
 
-# Calculate the value of all the quadrants given a date 
+# Calculate the value of all the quadrants given a date
 def quadrant_vals(indate):
 	quads = {}
 	for i in range(1, 5):
 		quads['q' + str(i)] = quadrant_n_vals(indate, i)
 
 	return quads
-	
+
 
 # Test Function
 def testing(indate, n=1):
 	for i in range(n):
 		d = indate + timedelta(days=i)
-		print("Date:", d, "|", 
+		print("Date:", d, "|",
 			  "DoY:", daynbr(d), "|",
 			  "Rnd:", round_nbr(d), "|",
-			  "Rnd Day:", round_day_nbr(d), "|", 
+			  "Rnd Day:", round_day_nbr(d), "|",
 			  "Step:", step(d), "|",
 			  "Quadrant:", quadrant(d)
 	    )
