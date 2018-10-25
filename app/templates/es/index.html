@@ -5,14 +5,16 @@
 <div class="style-jumbo mb-5">
 	<div class="jumbotron text-center mb-3 shadow-lg">
 		<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
-		<p class="lead">Hoy es {{ dates['today'].strftime("%d/%m/%Y") }} </p>
-		<p class="lead">Dias de vida: {{ dates['days_alive'] }}</p>
+		<p class="lead mt-0">Hoy es {{ dates['today'].strftime("%d/%m/%Y") }} </p>
+		<p class="lead mt-0">Dias de vida: {{ dates['days_alive'] }}</p>
 		<br>
-		<h2>En CALENDARIA</h2>
-		<p class="lead">La vuelta es: {{ dates['round'] }}</p>
-		<p class="lead">El cuadrante es: {{ dates['quad'] }}</p>
+		<h4>En CALENDARIA</h4>
+		<p class="lead mt-0">La vuelta es: {{ dates['round'] }}</p>
+		<p class="lead mt-0">El cuadrante es: {{ dates['quad_name_es'] }}</p>
+		<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
 	</div>
 </div>
+
 {% if not dates['is_rof'] %}
     <!-- Quadrant tab navigation -->
     <nav>
@@ -23,17 +25,147 @@
     		<a class="nav-item nav-link" id="q4-tab" data-toggle="tab" href="#q4" role="tab" aria-controls="nav-contact" aria-selected="false">CO-SE</a>
     	</div>
     </nav> <!-- navigation tabs -->
+
     <div class="tab-content" id="nav-tabContent">
-    	<div class="tab-pane fade show active" id="q1" role="tabpanel" aria-labelledby="q1-tab">{% include "es/_quadrant1.html" %}</div>
-    	<div class="tab-pane fade" id="q2" role="tabpanel" aria-labelledby="q2-tab">{% include "es/_quadrant2.html" %}</div>
-    	<div class="tab-pane fade" id="q3" role="tabpanel" aria-labelledby="q3-tab">{% include "es/_quadrant3.html" %}</div>
-    	<div class="tab-pane fade" id="q4" role="tabpanel" aria-labelledby="q4-tab">{% include "es/_quadrant4.html" %}</div>
+    	<div class="tab-pane fade show active" id="q1" role="tabpanel" aria-labelledby="q1-tab">
+    	    {% include "es/_quadrant_head.html" %}
+    	    {% set indices = [0, 1, 2, 3] %}
+    	    <!-- Accordion Q1 -->
+  		    <div class="accordion" id="accordionQ1">
+  			    <div class="card">
+    		        <div class="card-header" id="headingOne">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    			                Calendaria
+    			            </button>
+    		            </h5>
+    			    </div>
+    			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionQ1">
+			            <div class="card-body">
+			      	        {% include "es/_quadrant.html" %}
+			            </div>
+			        </div>
+    			    <div class="card-header" id="headingTwo">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    			                Contador
+    			            </button>
+    		            </h5>
+    			    </div>
+			        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionQ1">
+			            <div class="card-body">
+			      	        {% include "es/_counter.html" %}
+			            </div>
+			        </div>
+			    </div>
+    	    </div>
+    	</div>
+    	<div class="tab-pane fade" id="q2" role="tabpanel" aria-labelledby="q2-tab">
+    	    {% include "es/_quadrant_head.html" %}
+    	    {% set indices = [4, 5, 6, 7] %}
+    	    <!-- Accordion Q2 -->
+  		    <div class="accordion" id="accordionQ2">
+  			    <div class="card">
+    		        <div class="card-header" id="headingOne">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    			                Calendaria
+    			            </button>
+    		            </h5>
+    			    </div>
+    			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionQ2">
+			            <div class="card-body">
+			      	        {% include "es/_quadrant.html" %}
+			            </div>
+			        </div>
+    			    <div class="card-header" id="headingTwo">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    			                Contador
+    			            </button>
+    		            </h5>
+    			    </div>
+			        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionQ2">
+			            <div class="card-body">
+			      	        {% include "es/_counter.html" %}
+			            </div>
+			        </div>
+			    </div>
+    	    </div>
+    	</div>
+    	<div class="tab-pane fade" id="q3" role="tabpanel" aria-labelledby="q3-tab">
+    	    {% include "es/_quadrant_head.html" %}
+    	    {% set indices = [8, 9, 10, 11] %}
+    	    <!-- Accordion Q3 -->
+  		    <div class="accordion" id="accordionQ3">
+  			    <div class="card">
+    		        <div class="card-header" id="headingOne">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    			                Calendaria
+    			            </button>
+    		            </h5>
+    			    </div>
+    			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionQ3">
+			            <div class="card-body">
+			      	        {% include "es/_quadrant.html" %}
+			            </div>
+			        </div>
+    			    <div class="card-header" id="headingTwo">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    			                Contador
+    			            </button>
+    		            </h5>
+    			    </div>
+			        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionQ3">
+			            <div class="card-body">
+			      	        {% include "es/_counter.html" %}
+			            </div>
+			        </div>
+			    </div>
+    	    </div>
+    	</div>
+    	<div class="tab-pane fade" id="q4" role="tabpanel" aria-labelledby="q4-tab">
+    	    {% include "es/_quadrant_head.html" %}
+    	    {% set indices = [12, 13, 14, 15] %}
+    	    <!-- Accordion Q4 -->
+  		    <div class="accordion" id="accordionQ4">
+  			    <div class="card">
+    		        <div class="card-header" id="headingOne">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    			                Calendaria
+    			            </button>
+    		            </h5>
+    			    </div>
+    			    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionQ4">
+			            <div class="card-body">
+			      	        {% include "es/_quadrant.html" %}
+			            </div>
+			        </div>
+    			    <div class="card-header" id="headingTwo">
+    		            <h5 class="mb-0">
+    			            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    			                Contador
+    			            </button>
+    		            </h5>
+    			    </div>
+			        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionQ4">
+			            <div class="card-body">
+			      	        {% include "es/_counter.html" %}
+			            </div>
+			        </div>
+			    </div>
+    	    </div>
+    	</div>
     </div> <!-- .tab-content -->
+
 {% else %}
     <h2>Anillo de Fuego, dia del año {{dates['daynbr']}}</h2>
 {% endif %}
 <!-- Export button -->
 <a href="{{url_for('download_csv')}}">
-	<button class="btn btn-outline-primary mt-2 mb-4" id="edit-button">Exportar</button>
+	<button class="btn btn-outline-primary mt-3 mb-4" id="edit-button">Exportar</button>
 </a>
 {% endblock %}

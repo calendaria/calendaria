@@ -1,5 +1,5 @@
 from app.util import date_utils
-from datetime import datetime
+from unidecode import unidecode
 
 def create_export_data(indate, lang):
 	data = []
@@ -15,7 +15,7 @@ def create_export_data(indate, lang):
 		({'en': 'Negative Frequency', 'es': 'Frec-'}, 'freq_neg', 3, 2),
 		({'en': 'GAP', 'es': 'GAP'}, 'gap', 3, 2),
 		({'en': 'GAP Date', 'es': 'Fecha GAP'}, 'gap_date_str', 3, 2),
-		({'en': 'Fifth Stage', 'es': '5°'}, 'fs', 3, 2),
+		({'en': 'Fifth Stage', 'es': '5ta'}, 'fs', 3, 2),
 		({'en': 'AU', 'es': 'Eje 258'}, 'au', 3, 2),
 		({'en': 'CG', 'es': 'CG'}, 'cg', 3, 2),
 		({'en': 'DGC', 'es': 'DGC'}, 'cg_tot_days', 3, 2),
@@ -30,13 +30,14 @@ def create_export_data(indate, lang):
 		({'en': 'Negative Frequency', 'es': 'Frec-'}, 'freq_neg', 1, 4),
 		({'en': 'GAP', 'es': 'GAP'}, 'gap', 1, 4),
 		({'en': 'GAP Date', 'es': 'Fecha GAP'}, 'gap_date_str', 1, 4),
-		({'en': 'Fifth Stage', 'es': '5°'}, 'fs', 1, 4),
+		({'en': 'Fifth Stage', 'es': '5ta'}, 'fs', 1, 4),
 		({'en': 'AU', 'es': 'Eje 258'}, 'au', 1, 4),
 		({'en': 'CG', 'es': 'CG'}, 'cg', 1, 4),
 		({'en': 'DGC', 'es': 'DGC'}, 'cg_tot_days', 1, 4),
 	]
 	# Append the headers of the file
 	if 'es' in lang.lower():
+	    lang = 'es'
 	    date_title = ['Fecha:', indate.strftime('%d-%b-%Y')]
 	    quad_title = ['Cuadrante:', date_utils.quadrant(indate)]
 	    round_title = ['Vuelta:', date_utils.quadrant(indate)]
@@ -48,6 +49,7 @@ def create_export_data(indate, lang):
 	    data.append(['Valores de la vuelta para la fecha:'])
 	    data.append([])
 	else:
+	    lang = 'en'
 	    date_title = ['Date:', indate.strftime('%d-%b-%Y')]
 	    quad_title = ['Quadrant:', date_utils.quadrant(indate)]
 	    round_title = ['Round:', date_utils.quadrant(indate)]
@@ -64,10 +66,15 @@ def create_export_data(indate, lang):
 		if not vals[0]:
 			data.append([])
 		else:
-			title = vals[0][lang.lower()]
+			title = vals[0][lang]
 			key = vals[1]
 			ql = 'q' + str(vals[2])
 			qr = 'q' + str(vals[3])
-			row = [title] + quads[ql][key] + quads[qr][key]
+			row_vals_l = [str(i) for i in quads[ql][key]]
+			row_vals_r = [str(i) for i in quads[qr][key]]
+			row_vals_lu = [unidecode(j) for j in row_vals_l]
+			row_vals_ru = [unidecode(j) for j in row_vals_r]
+			row = [title] + row_vals_lu + [''] + row_vals_ru
 			data.append(row)
 	return data
+

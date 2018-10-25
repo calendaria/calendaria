@@ -2,7 +2,7 @@ from app import app
 from app.util import tz_util
 
 
-def choose_best_lang(request, langs, apikey=app.config['IPSTACK_API_KEY']):
+def choose_best_lang(request, langs, apikey=app.config['IPSTACK_API_KEY'], testing_es=True):
     # First, try to do a best match
     lang = request.accept_languages.best_match(langs)
     if not lang:
@@ -14,6 +14,8 @@ def choose_best_lang(request, langs, apikey=app.config['IPSTACK_API_KEY']):
             if not lang:
                 # if nothing works, then return english by default
                 lang = 'en'
+    if testing_es:
+        lang = 'es'
     return lang
 
 

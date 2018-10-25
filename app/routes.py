@@ -84,6 +84,8 @@ def index_es():
 	dates['round'] = date_utils.round_nbr(dates['today'])
 	dates['quad'] = date_utils.quadrant(dates['today'])
 	dates['daynbr'] = date_utils.daynbr(dates['today'])
+	dates['quad_name_es'] = date_utils.quadrant_name(dates['today'])
+	dates['step'] = date_utils.step(dates['today'])
 	dates['is_rof'] = date_utils.rof(dates['today'])
 	# Quadrant grid
 	grid = date_utils.round_vals_from_date(dates['today'])
