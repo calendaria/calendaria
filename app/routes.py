@@ -380,6 +380,7 @@ def test_date():
 @app.route('/test_locale')
 def test_locale():
 	lang = choose_best_lang(request, SUP_LANGUAGES)
+	langs = request.accept_languages.best_match(SUP_LANGUAGES)
 	if request.headers.getlist("X-Forwarded-For"):
 	    ip = request.headers.getlist("X-Forwarded-For")[0]
 	else:
@@ -389,7 +390,7 @@ def test_locale():
 	r = requests.get(url)
 	j = json.loads(r.text)
 	city = j['city']
-	return render_template('test_locale.html', loc=lang, url=url, city=city)
+	return render_template('test_locale.html', loc=lang, url=url, city=city, langs=langs)
 
 # Test view
 @app.route('/test_locale2')
