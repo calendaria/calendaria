@@ -4,21 +4,23 @@
 <!-- Main Titles -->
 <div class="style-jumbo mb-5">
 	<div class="jumbotron text-center mb-3 shadow-lg">
-		<h2 class="display-4">{{ current_user.first_name.capitalize() }},</h2>
-		<p class="lead">Hoy es {{ dates['today'].strftime("%d") }} de {{ dates['today'].strftime("%B, %Y").capitalize() }}</p>
-		<p class="lead">Hace {{ dates['days_alive'] }} dias que estas vivo</p>
-		<p class="lead">Hoy estamos en el Cuadrante {{ dates['quad'] }}</p>
-		<p class="lead">La vuelta vigente es la {{ dates['round'] }}</p>
+		<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
+		<p class="lead">Hoy es {{ dates['today'].strftime("%d/%m/%Y") }} </p>
+		<p class="lead">Dias de vida: {{ dates['days_alive'] }}</p>
+		<br>
+		<h2>En CALENDARIA</h2>
+		<p class="lead">La vuelta es: {{ dates['round'] }}</p>
+		<p class="lead">El cuadrante es: {{ dates['quad'] }}</p>
 	</div>
 </div>
 {% if not dates['is_rof'] %}
     <!-- Quadrant tab navigation -->
     <nav>
     	<div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-    		<a class="nav-item nav-link active" id="q1-tab" data-toggle="tab" href="#q1" role="tab" aria-controls="nav-home" aria-selected="true"><span>Q1 (LO-SO)</span></a>
-    		<a class="nav-item nav-link" id="q2-tab" data-toggle="tab" href="#q2" role="tab" aria-controls="nav-profile" aria-selected="false">Q2 (IN-NE)</a>
-    		<a class="nav-item nav-link" id="q3-tab" data-toggle="tab" href="#q3" role="tab" aria-controls="nav-contact" aria-selected="false">Q3 (HU-NO)</a>
-    		<a class="nav-item nav-link" id="q4-tab" data-toggle="tab" href="#q4" role="tab" aria-controls="nav-contact" aria-selected="false">Q4 (CO-SE)</a>
+    		<a class="nav-item nav-link active" id="q1-tab" data-toggle="tab" href="#q1" role="tab" aria-controls="nav-home" aria-selected="true"><span>LO-SO</span></a>
+    		<a class="nav-item nav-link" id="q2-tab" data-toggle="tab" href="#q2" role="tab" aria-controls="nav-profile" aria-selected="false">IN-NE</a>
+    		<a class="nav-item nav-link" id="q3-tab" data-toggle="tab" href="#q3" role="tab" aria-controls="nav-contact" aria-selected="false">HU-NO</a>
+    		<a class="nav-item nav-link" id="q4-tab" data-toggle="tab" href="#q4" role="tab" aria-controls="nav-contact" aria-selected="false">CO-SE</a>
     	</div>
     </nav> <!-- navigation tabs -->
     <div class="tab-content" id="nav-tabContent">

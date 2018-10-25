@@ -1,5 +1,8 @@
 def choose_best_lang(request, langs):
-    return request.accept_languages.best_match(langs)
+    lang = request.accept_languages.best_match(langs)
+    if not lang:
+        lang = 'es'
+    return lang
 
 def get_ip(request):
     if request.headers.getlist("X-Forwarded-For"):

@@ -89,6 +89,8 @@ def index_es():
 	grid = date_utils.round_vals_from_date(dates['today'])
 	# Set title
 	title = current_user.first_name + " Home"
+	# Save date in session for export
+	session['date_str'] = dates['today'].strftime('%d-%b-%Y')
 	return render_template('es/index.html', title=title, dates=dates, grid=grid)
 
 
@@ -383,7 +385,7 @@ def test_locale():
 	else:
 	    ip = request.remote_addr
 	url = 'http://api.ipstack.com/' + str(ip)
-	url += '?access_key=' + app.config['IPSTACK_API_KEY']
+	url += '?access_key=' + IPSTACK_API_KEY
 	r = requests.get(url)
 	j = json.loads(r.text)
 	city = j['city']

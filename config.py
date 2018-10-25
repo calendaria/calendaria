@@ -29,7 +29,7 @@ class Config(object):
 	ADMINS = ['calendariasup@gmail.com']
 	SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 	# Languages and location
-	LANGUAGES = ['en', 'en_US', 'es', 'es_ES', 'es_AR']
+	LANGUAGES = ['en', 'en_US', 'es', 'es_ES', 'es_AR', 'es-419', 'es_419']
 	IPSTACK_API_KEY = os.environ.get('IPSTACK_API_KEY')
 
 
