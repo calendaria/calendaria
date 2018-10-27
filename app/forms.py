@@ -86,7 +86,7 @@ class RegistrationForm(FlaskForm):
 
 
 
-# Form to register a new user
+# Form to register a new user spanish
 class RegistrationESForm(FlaskForm):
 	email = StringField('Email',
 		validators=[DataRequired(), Email('Direccion de email invalida')],
@@ -98,6 +98,14 @@ class RegistrationESForm(FlaskForm):
 		validators=[DataRequired()],
 		render_kw={"class": "form-control",
 			"id": "register-bday-es",
+			"placeholder": "dd/mm/yyyy",
+			"onkeypress": "return false"},
+		format="%d/%m/%Y")
+
+	deriv_date = DateField('Fecha de derivación',
+		validators=[DataRequired()],
+		render_kw={"class": "form-control",
+			"id": "derivdate-register-es",
 			"placeholder": "dd/mm/yyyy",
 			"onkeypress": "return false"},
 		format="%d/%m/%Y")
@@ -165,6 +173,14 @@ class UpdateProfileESForm(FlaskForm):
 		validators=[DataRequired()],
 		render_kw={"class": "form-control",
 			"id": "update-bday-es",
+			"placeholder": "dd/mm/yyyy",
+			"onkeypress": "return false"},
+		format="%d/%m/%Y")
+
+	deriv_date = DateField('Fecha de derivación',
+		validators=[DataRequired()],
+		render_kw={"class": "form-control",
+			"id": "derivdate-register-es",
 			"placeholder": "dd/mm/yyyy",
 			"onkeypress": "return false"},
 		format="%d/%m/%Y")

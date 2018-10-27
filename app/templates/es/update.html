@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "es/base.html" %}
 
 {% block content %}
 <!-- Login -->
 <div class="mt-3">
-	<h3>Actualice su informacion:</h3>
+	<h2>Actualice su información:</h2>
 </div>
 <div class="row h-100 mt-5 mb-5">
 	<div class="col-6 col-md-4">
@@ -39,6 +39,24 @@
 					</div>
 					<div>
 						{% for error in form.dob.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left"><label for="derivdate-register-es">{{ form.deriv_date.label }}</label></div>
+					<div class="input-group">
+					    {% if current_user.deriv_date %}
+						    {{ form.deriv_date(value=current_user.deriv_date.strftime("%m/%d/%Y")) }}
+						{% else %}
+						    {{ form.deriv_date }}
+						{% endif %}
+						<div class="input-group-append">
+								<span class="input-group-text"><i class="material-icons">date_range</i></span>
+						</div>
+					</div>
+					<div>
+						{% for error in form.deriv_date.errors %}
 							<span style="color: red;">{{ error }}</span>
 						{% endfor %}
 					</div>

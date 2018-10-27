@@ -110,6 +110,7 @@ def gap(indate):
 def gap_date(indate):
 	return indate - timedelta(days=freq_neg(indate))
 
+
 # Total days from Global Quarantine: 14 Oct 2014
 def cg_tot_days(indate):
 	cg_date = date(2012, 10, 14)
@@ -123,6 +124,25 @@ def cg(indate):
 # Calculate the Global Quarantine day
 def cg_day(indate):
 	return cg_tot_days(indate)%39 + 1
+
+# Total days from Personal Quarantine (Default is Dolores)
+def cp_tot_days(indate, deriv_date=None):
+    if not deriv_date:
+        return None
+    diff = indate - deriv_date
+    return diff.days
+
+# Calculate the Personal Quarantine based on the CP Tot days
+def cp(indate, deriv_date=None):
+    if not deriv_date:
+        return None
+    return int(cp_tot_days(indate, deriv_date)/39) + 1
+
+# Calculate the Personal Quarantine day
+def cp_day(indate, deriv_date=None):
+    if not deriv_date:
+        return None
+    return cp_tot_days(indate, deriv_date)%39 + 1
 
 # Total days from Fifth Stage date: 28 Aug 2016
 def fs(indate):
@@ -162,7 +182,7 @@ def rof(indate):
 		return False
 
 # Calculate the whole round values for desired round and year
-def round_vals(rnd, year):
+def round_vals(rnd, year, deriv_date=None):
 	'''
 	We are going to calculate all the values for the round inside a dictionary.
 	Each entry of the dictionary will have an array of length 16,
@@ -174,6 +194,13 @@ def round_vals(rnd, year):
 	cal_dict['round_days'] = [i for i in range(1, 17)]
 	cal_dict['steps'] = [STEPS[i] for i in range(1, 17)]
 	cal_dict['round'] = [rnd for i in range(1, 17)]
+
+	if not deriv_date:
+	    cp_tot_days_ = ['N/A']*16
+	    cp_ = ['N/A']*16
+	    cp_day_ = ['N/A']*16
+	else:
+	    cp_tot_days_, cp_, cp_day_= [], [], []
 
 	# Initialize the lists to put the different variables
 	dates, dates_str, day_nbr, week_nbr, weekday = [], [], [], [], []
@@ -211,6 +238,10 @@ def round_vals(rnd, year):
 			au_ += [au(curr_date)]
 			quads += [quadrant(curr_date)]
 			quad_names_es += [quadrant_name(curr_date)]
+			if deriv_date:
+			    cp_tot_days_ += [cp_tot_days(curr_date, deriv_date)]
+			    cp_ += [cp(curr_date, deriv_date)]
+			    cp_day_ += [cp_day(curr_date, deriv_date)]
 
 	#Update the dictionary
 	cal_dict['dates'] = dates
@@ -225,6 +256,9 @@ def round_vals(rnd, year):
 	cal_dict['cg_tot_days'] = cg_tot_days_
 	cal_dict['cg'] = cg_
 	cal_dict['cg_day'] = cg_day_
+	cal_dict['cp_tot_days'] = cp_tot_days_
+	cal_dict['cp'] = cp_
+	cal_dict['cp_day'] = cp_day_
 	cal_dict['fs'] = fs_
 	cal_dict['au'] = au_
 	cal_dict['quads'] = quads
@@ -234,17 +268,17 @@ def round_vals(rnd, year):
 	return cal_dict
 
 # Return the round values for a specific date
-def round_vals_from_date(indate):
+def round_vals_from_date(indate, deriv_date=None):
 	rnd = round_nbr(indate)
 	yr = indate.year
 
-	return round_vals(rnd, yr)
+	return round_vals(rnd, yr, deriv_date)
 
 
 # Values for a particular quadrant given a date
-def quadrant_n_vals(indate, quad_n):
+def quadrant_n_vals(indate, quad_n, deriv_date=None):
 	quad = {}
-	rnd_vals = round_vals_from_date(indate)
+	rnd_vals = round_vals_from_date(indate, deriv_date)
 	quad_n = int(quad_n)
 
 	# Define the values to pull from dictionary lists
@@ -268,10 +302,10 @@ def quadrant_n_vals(indate, quad_n):
 	return quad
 
 # Calculate the value of all the quadrants given a date
-def quadrant_vals(indate):
+def quadrant_vals(indate, deriv_date=None):
 	quads = {}
 	for i in range(1, 5):
-		quads['q' + str(i)] = quadrant_n_vals(indate, i)
+		quads['q' + str(i)] = quadrant_n_vals(indate, i, deriv_date)
 
 	return quads
 

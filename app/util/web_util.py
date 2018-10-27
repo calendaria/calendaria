@@ -3,6 +3,10 @@ from app.util import tz_util
 
 
 def choose_best_lang(request, langs, apikey=app.config['IPSTACK_API_KEY'], testing_es=True):
+    # If testing just return
+    if testing_es:
+        lang = 'es'
+        return lang
     # First, try to do a best match
     lang = request.accept_languages.best_match(langs)
     if not lang:
@@ -14,8 +18,6 @@ def choose_best_lang(request, langs, apikey=app.config['IPSTACK_API_KEY'], testi
             if not lang:
                 # if nothing works, then return english by default
                 lang = 'en'
-    if testing_es:
-        lang = 'es'
     return lang
 
 
@@ -42,6 +44,7 @@ def choose_lang_from_header(request):
             lang = 'en'
             break
     return lang
+
 
 def get_ip(request):
     if request.headers.getlist("X-Forwarded-For"):

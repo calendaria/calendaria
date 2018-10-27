@@ -1,3 +1,4 @@
+<h5>Global</h5>
 <table class="table table-hover">
     <tbody>
         <tr class="text-center">
@@ -8,11 +9,44 @@
 			<td class="">{{grid['cg'][indices[3]]}}</td>
 		</tr>
 		<tr class="text-center">
+			<td>NDCG</td>
+			<td class="">{{grid['cg_day'][indices[0]]}}</td>
+			<td class="">{{grid['cg_day'][indices[1]]}}</td>
+			<td class="">{{grid['cg_day'][indices[2]]}}</td>
+			<td class="">{{grid['cg_day'][indices[3]]}}</td>
+		</tr>
+		<tr class="text-center">
 			<td>DCG</td>
 			<td class="">{{grid['cg_tot_days'][indices[0]]}}</td>
 			<td class="">{{grid['cg_tot_days'][indices[1]]}}</td>
 			<td class="">{{grid['cg_tot_days'][indices[2]]}}</td>
 			<td class="">{{grid['cg_tot_days'][indices[3]]}}</td>
+		</tr>
+	</tbody>
+</table>
+<h5>Personal</h5>
+<table class="table table-hover">
+    <tbody>
+		<tr class="text-center">
+			<td>CP</td>
+			<td class="">{{grid['cp'][indices[0]]}}</td>
+			<td class="">{{grid['cp'][indices[1]]}}</td>
+			<td class="">{{grid['cp'][indices[2]]}}</td>
+			<td class="">{{grid['cp'][indices[3]]}}</td>
+		</tr>
+		<tr class="text-center">
+			<td>NDCP</td>
+			<td class="">{{grid['cp_day'][indices[0]]}}</td>
+			<td class="">{{grid['cp_day'][indices[1]]}}</td>
+			<td class="">{{grid['cp_day'][indices[2]]}}</td>
+			<td class="">{{grid['cp_day'][indices[3]]}}</td>
+		</tr>
+		<tr class="text-center">
+			<td>DCP</td>
+			<td class="">{{grid['cp_tot_days'][indices[0]]}}</td>
+			<td class="">{{grid['cp_tot_days'][indices[1]]}}</td>
+			<td class="">{{grid['cp_tot_days'][indices[2]]}}</td>
+			<td class="">{{grid['cp_tot_days'][indices[3]]}}</td>
 		</tr>
     </tbody>
 </table>

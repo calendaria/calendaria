@@ -1,7 +1,7 @@
 from app.util import date_utils
 from unidecode import unidecode
 
-def create_export_data(indate, lang):
+def create_export_data(indate, lang, deriv_date=None,):
 	data = []
 	display_order = [
 		# title, key, quad left, quad right (None or False for blank row)
@@ -19,6 +19,9 @@ def create_export_data(indate, lang):
 		({'en': 'AU', 'es': 'Eje 258'}, 'au', 3, 2),
 		({'en': 'CG', 'es': 'CG'}, 'cg', 3, 2),
 		({'en': 'DGC', 'es': 'DGC'}, 'cg_tot_days', 3, 2),
+		({'en': 'CP', 'es': 'CP'}, 'cp', 3, 2),
+		({'en': 'NDCP', 'es': 'NDCP'}, 'cp_tot_days', 3, 2),
+		({'en': 'DCP', 'es': 'DCP'}, 'cp_day', 3, 2),
 		([None]),
 		({'en' :'Step', 'es': 'Paso'}, 'steps', 1, 4),
 		({'en': 'Quadrant', 'es': 'Cuadrante'}, 'quads', 1, 4),
@@ -34,16 +37,18 @@ def create_export_data(indate, lang):
 		({'en': 'AU', 'es': 'Eje 258'}, 'au', 1, 4),
 		({'en': 'CG', 'es': 'CG'}, 'cg', 1, 4),
 		({'en': 'DGC', 'es': 'DGC'}, 'cg_tot_days', 1, 4),
+		({'en': 'CP', 'es': 'CP'}, 'cp', 1, 4),
+		({'en': 'NDCP', 'es': 'NDCP'}, 'cp_tot_days', 1, 4),
+		({'en': 'DCP', 'es': 'DCP'}, 'cp_day', 1, 4),
 	]
 	# Append the headers of the file
 	if 'es' in lang.lower():
 	    lang = 'es'
-	    date_title = ['Fecha:', indate.strftime('%d-%b-%Y')]
-	    quad_title = ['Cuadrante:', date_utils.quadrant(indate)]
-	    round_title = ['Vuelta:', date_utils.quadrant(indate)]
-	    data.append(date_title)
-	    data.append(quad_title)
-	    data.append(round_title)
+	    data.append(['Fecha:', indate.strftime('%d-%b-%Y')])
+	    data.append(['Cuadrante:', date_utils.quadrant(indate)])
+	    data.append(['Vuelta:', date_utils.quadrant(indate)])
+	    if deriv_date:
+	        data.append(['Fecha de derivacion:', deriv_date.strftime('%d-%b-%Y')])
 	    data.append([])
 	    data.append([])
 	    data.append(['Valores de la vuelta para la fecha:'])
@@ -61,7 +66,10 @@ def create_export_data(indate, lang):
 	    data.append(['Round values for date:'])
 	    data.append([])
 	# Now the quad values
-	quads = date_utils.quadrant_vals(indate)
+	if not deriv_date:
+	    quads = date_utils.quadrant_vals(indate)
+	else:
+	    quads = date_utils.quadrant_vals(indate, deriv_date)
 	for vals in display_order:
 		if not vals[0]:
 			data.append([])

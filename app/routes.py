@@ -38,7 +38,8 @@ IPSTACK_API_KEY = app.config['IPSTACK_API_KEY']
 @login_required
 def index():
     # Get/Set user's local language
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'es' in lang.lower():
 		return redirect(url_for('index_es'))
 	# Get user's local time by using IPstack API
@@ -69,14 +70,15 @@ def index():
 @login_required
 def index_es():
     # Get/Set user's local language
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'en' in lang.lower():
 		return redirect(url_for('index'))
 	# Get user's local time by using IPstack API
 	tz = get_tz(IPSTACK_API_KEY, request=request)
 	# Set the locale based on language to display the right language for dates
 	locale.setlocale(locale.LC_TIME, ES_LC)
-	# Save all dates info in dict
+	# Save all dates info to display in dict
 	dates = {}
 	dates['today'] = set_tz_today(tz)
 	dates['days_alive'] = date_utils.day_diff(dates['today'],
@@ -88,7 +90,13 @@ def index_es():
 	dates['step'] = date_utils.step(dates['today'])
 	dates['is_rof'] = date_utils.rof(dates['today'])
 	# Quadrant grid
-	grid = date_utils.round_vals_from_date(dates['today'])
+	if current_user.deriv_date:
+	    grid = date_utils.round_vals_from_date(dates['today'],
+	    current_user.deriv_date.date())
+	    session['deriv_date'] = current_user.deriv_date.strftime('%d-%b-%Y')
+	else:
+	    grid = date_utils.round_vals_from_date(dates['today'])
+	    session['deriv_date'] = ''
 	# Set title
 	title = current_user.first_name + " Home"
 	# Save date in session for export
@@ -99,7 +107,8 @@ def index_es():
 # Login to the website
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'es' in lang.lower():
 		return redirect(url_for('login_es'))
 	if current_user.is_authenticated:
@@ -121,7 +130,8 @@ def login():
 # Login to the website in spanish
 @app.route('/es/login', methods=['GET', 'POST'])
 def login_es():
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'en' in lang.lower():
 		return redirect(url_for('login'))
 	if current_user.is_authenticated:
@@ -143,7 +153,8 @@ def login_es():
 # Register a new user
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'es' in lang.lower():
 		return redirect(url_for('register_es'))
 	if current_user.is_authenticated:
@@ -162,7 +173,8 @@ def register():
 # Register a new user spanish
 @app.route('/es/register', methods=['GET', 'POST'])
 def register_es():
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'en' in lang.lower():
 		return redirect(url_for('register'))
 	if current_user.is_authenticated:
@@ -182,7 +194,8 @@ def register_es():
 @app.route('/profile/<int:user_id>')
 @login_required
 def profile(user_id):
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'es' in lang.lower():
 		return redirect(url_for('profile_es', user_id=current_user.id))
 	title = current_user.first_name.capitalize() + " Profile"
@@ -194,7 +207,8 @@ def profile(user_id):
 @app.route('/es/profile/<int:user_id>')
 @login_required
 def profile_es(user_id):
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'en' in lang.lower():
 		return redirect(url_for('profile', user_id=current_user.id))
 	title = current_user.first_name.capitalize() + " Perfil"
@@ -207,7 +221,8 @@ def profile_es(user_id):
 @app.route('/profile/update/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def update(user_id):
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'es' in lang.lower():
 		return redirect(url_for('profile_es', user_id=current_user.id))
 	title = current_user.first_name + "Update Profile"
@@ -225,7 +240,8 @@ def update(user_id):
 @app.route('/es/profile/update/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def update_es(user_id):
-	lang = choose_best_lang(request, SUP_LANGUAGES)
+	# lang = choose_best_lang(request, SUP_LANGUAGES)
+	lang = 'es'
 	if 'en' in lang.lower():
 		return redirect(url_for('profile', user_id=current_user.id))
 	title = current_user.first_name + "Actualizar Perfil"
@@ -234,6 +250,7 @@ def update_es(user_id):
 		current_user.first_name = form.first_name.data
 		current_user.email = form.email.data
 		current_user.dob = form.dob.data
+		current_user.deriv_date = form.deriv_date.data
 		db.session.commit()
 		return redirect(url_for('profile', user_id=current_user.id))
 	return render_template('es/update.html', title=title, form=form)
@@ -359,8 +376,12 @@ def download_csv():
     else:
         lang = 'en'
     # Create the data for export based on the date of the previous request
-    w_date = datetime.strptime(session['date_str'], '%d-%b-%Y')
-    data = export_utils.create_export_data(w_date, lang)
+    w_date = datetime.strptime(session['date_str'], '%d-%b-%Y').date()
+    if not session['deriv_date']:
+        data = export_utils.create_export_data(w_date, lang)
+    else:
+        d_date = datetime.strptime(session['deriv_date'], '%d-%b-%Y').date()
+        data = export_utils.create_export_data(indate=w_date, lang=lang, deriv_date=d_date)
     sheet = pe.Sheet(data)
 	# Create the http response to export
     output = make_response(sheet.csv)
