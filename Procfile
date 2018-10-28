@@ -1,1 +1,1 @@
-web: gunicorn app:calendaria 
+web: gunicorn calendaria:app 
