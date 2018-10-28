@@ -16,9 +16,9 @@ class Config(object):
 	# Debug
 	DEBUG = True
 	# DB
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+	# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 	# SQLALCHEMY_DATABASE_URI = SQL_DB_URI
-	# SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SQLALCHEMY_POOL_RECYCLE = 299
 	# Email
