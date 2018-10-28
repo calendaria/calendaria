@@ -1,0 +1,41 @@
+<!-- Calendar Table -->
+<table class="table table-hover mt-3" style="font-size: 0.85rem;">
+	<thead class="text-center" id="quadrant-header">
+			<tr>
+		        <th style="border-radius: 6px 0 0 0;"></th>
+		        <th>LO</th>
+		        <th>IN</th>
+		        <th>HU</th>
+		        <th>CO</th>
+		        <th>LO</th>
+		        <th>IN</th>
+		        <th>HU</th>
+		        <th style="border-radius: 0 6px 0 0;">CO</th>
+			</tr>
+	</thead>
+	<tbody>
+		{% for i in range(22) %}
+		<tr class="text-center">
+			{% for j in range(9) %}
+				{% if j == 0 %}
+					<td id="quadrant-header">{{ calendar[disp_rnd][i][j] }}</td>
+				{% elif j > 0 and j <= 4 %}
+					{% if i >=0 and i <= 10%}
+						<!-- Top right quad -->
+						<td style="background: #e1f5fe;">{{calendar[disp_rnd][i][j].strftime('%d/%m')}}</td>
+					{% else %}
+						<!-- Bottom right quad -->
+						<td style="background: #d1c4e9;">{{calendar[disp_rnd][i][j].strftime('%d/%m')}}</td>
+					{% endif %}
+				{% else %}
+					{% if i >=0 and i <= 10%}
+						<td style="background: #ffccbc;">{{calendar[disp_rnd][i][j].strftime('%d/%m')}}</td>
+					{% else %}
+						<td style="background: #c8e6c9;">{{calendar[disp_rnd][i][j].strftime('%d/%m')}}</td>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</tr>
+		{% endfor %}
+    </tbody>
+</table>

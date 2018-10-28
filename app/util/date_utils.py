@@ -310,6 +310,36 @@ def quadrant_vals(indate, deriv_date=None):
 	return quads
 
 
+# Create calendar (daynbrs) to display in Calendar page
+def create_daynbr_grid(year, from_round=1, to_round=11):
+	calendar = []
+	# Create a structure with the correct day nbrs in order
+	for i in range(to_round, from_round-1, -1):
+		rnd = round_vals(i, 2018)
+		calendar.append([i] + rnd['day_nbr'][8:12] + rnd['day_nbr'][4:8])
+	for i in range(from_round, to_round+1):
+		rnd = round_vals(i, 2018)
+		calendar.append([i] + rnd['day_nbr'][:4] + rnd['day_nbr'][12:16])
+	return calendar
+
+
+# Create calendar (dates) to display in Calendar page
+def create_calendar(year, from_round=1, to_round=11):
+	cal = create_daynbr_grid(year=year, from_round=from_round, to_round=to_round)
+	for row in cal:
+		for i in range(len(row)):
+			if i == 0:
+				continue
+			else:
+				row[i] = daynbr_to_date(row[i], year)
+	return cal
+
+
+# Transform daynbr to date
+def daynbr_to_date(daynbr, year):
+	return (date(year, 1, 1) + timedelta(days=daynbr-1))
+
+
 # Test Function
 def testing(indate, n=1):
 	for i in range(n):

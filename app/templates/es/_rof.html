@@ -1,0 +1,10 @@
+<!-- Anillo de fuego -->
+<div class="mt-4"></div>
+{% for i in range(14) %}
+	{% set daynbr = 353 + i %}
+	{% set daydate = 19 + i %}
+	<div class="row">
+		<div class="mx-auto">{{daynbr}} <span class="pl-5">{{daydate}}/12</span></div>
+	</div>
+{% endfor %}
+<div class="mb-4"></div>

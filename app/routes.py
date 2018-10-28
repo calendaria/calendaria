@@ -424,3 +424,12 @@ def test_locale2():
     other_date = set_tz_date(datetime.utcnow(), 'Pacific/Auckland')
     return render_template('test_date2.html', tz_str=tz_str,
         local_date=local_date, other_date=other_date)
+
+
+@app.route('/es/calendar')
+def calendar():
+	calendar = {}
+	calendar['year'] = datetime.today().year
+	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
+	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
+	return render_template('es/calendar.html', calendar=calendar)
