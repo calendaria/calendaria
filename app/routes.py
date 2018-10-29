@@ -75,7 +75,7 @@ def quadrant():
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
 	if 'es' in lang.lower():
-		return redirect(url_for('index_es'))
+		return redirect(url_for('quadrant_es'))
 	# Get user's local time by using IPstack API
 	tz = get_tz(IPSTACK_API_KEY, request=request)
 	# Set the locale based on language to display the right language for dates
@@ -106,7 +106,7 @@ def quadrant_es():
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
 	if 'en' in lang.lower():
-		return redirect(url_for('index'))
+		return redirect(url_for('quadrant'))
 	# Get user's local time by using IPstack API
 	tz = get_tz(IPSTACK_API_KEY, request=request)
 	# Set the locale based on language to display the right language for dates
