@@ -92,7 +92,7 @@ def index_es():
 	# Quadrant grid
 	if current_user.deriv_date:
 	    grid = date_utils.round_vals_from_date(dates['today'],
-	    current_user.deriv_date.date())
+	    	current_user.deriv_date.date())
 	    session['deriv_date'] = current_user.deriv_date.strftime('%d-%b-%Y')
 	else:
 	    grid = date_utils.round_vals_from_date(dates['today'])
@@ -443,6 +443,6 @@ def calendar():
 @login_required
 def date_details(year, daynbr):
 	d = date_utils.daynbr_to_date(daynbr, year)
-	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date)
+	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date())
 	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
 	return render_template('es/date_details.html', dates=dates)
