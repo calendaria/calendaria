@@ -46,7 +46,7 @@ def index():
 	calendar = {}
 	calendar['today'] = set_tz_today(tz)
 	calendar['year'] = datetime.today().year
-	calendar['days_alive'] = date_utils.day_diff(dates['today'],
+	calendar['days_alive'] = date_utils.day_diff(calendar['today'],
 	    current_user.dob.date())
 	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
 	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
