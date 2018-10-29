@@ -4,8 +4,7 @@
 <!-- Main Titles -->
 <div class="style-jumbo mb-5">
 	<div class="jumbotron text-center mb-3 shadow-lg">
-		<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
-		<p class="lead mt-0">Hoy es {{ dates['today'].strftime("%d/%m/%Y") }} </p>
+		<h2 class="display-4">Cuadrante: {{ dates['date'].strftime("%d/%m/%Y") }}</h2>
 		<p class="lead mt-0">Días de vida: {{ dates['days_alive'] }}</p>
 		<br>
 		<h4>En CALENDARIA</h4>

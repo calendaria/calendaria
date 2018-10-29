@@ -68,14 +68,14 @@ def date_details(year, daynbr):
 
 
 # Calendar view
-@app.route('/quadrant')
+@app.route('/quadrant/<int:year>/<int:daynbr>')
 @login_required
-def quadrant():
+def quadrant(year, daynbr):
     # Get/Set user's local language
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
 	if 'es' in lang.lower():
-		return redirect(url_for('quadrant_es'))
+		return redirect(url_for('quadrant_es', year=year, daynbr=daynbr))
 	# Get user's local time by using IPstack API
 	tz = get_tz(IPSTACK_API_KEY, request=request)
 	# Set the locale based on language to display the right language for dates
@@ -99,9 +99,9 @@ def quadrant():
 
 
 # Spanish index
-@app.route('/es/quadrant')
+@app.route('/es/quadrant/<int:year>/<int:daynbr>')
 @login_required
-def quadrant_es():
+def quadrant_es(year, daynbr):
     # Get/Set user's local language
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
@@ -113,27 +113,27 @@ def quadrant_es():
 	locale.setlocale(locale.LC_TIME, ES_LC)
 	# Save all dates info to display in dict
 	dates = {}
-	dates['today'] = set_tz_today(tz)
-	dates['days_alive'] = date_utils.day_diff(dates['today'],
+	dates['date'] = date_utils.daynbr_to_date(daynbr, year)
+	dates['days_alive'] = date_utils.day_diff(dates['date'],
 	    current_user.dob.date())
-	dates['round'] = date_utils.round_nbr(dates['today'])
-	dates['quad'] = date_utils.quadrant(dates['today'])
-	dates['daynbr'] = date_utils.daynbr(dates['today'])
-	dates['quad_name_es'] = date_utils.quadrant_name(dates['today'])
-	dates['step'] = date_utils.step(dates['today'])
-	dates['is_rof'] = date_utils.rof(dates['today'])
+	dates['round'] = date_utils.round_nbr(dates['date'])
+	dates['quad'] = date_utils.quadrant(dates['date'])
+	dates['daynbr'] = date_utils.daynbr(dates['date'])
+	dates['quad_name_es'] = date_utils.quadrant_name(dates['date'])
+	dates['step'] = date_utils.step(dates['date'])
+	dates['is_rof'] = date_utils.rof(dates['date'])
 	# Quadrant grid
 	if current_user.deriv_date:
-	    grid = date_utils.round_vals_from_date(dates['today'],
+	    grid = date_utils.round_vals_from_date(dates['date'],
 	    	current_user.deriv_date.date())
 	    session['deriv_date'] = current_user.deriv_date.strftime('%d-%b-%Y')
 	else:
-	    grid = date_utils.round_vals_from_date(dates['today'])
+	    grid = date_utils.round_vals_from_date(dates['date'])
 	    session['deriv_date'] = ''
 	# Set title
 	title = current_user.first_name + " Home"
 	# Save date in session for export
-	session['date_str'] = dates['today'].strftime('%d-%b-%Y')
+	session['date_str'] = dates['date'].strftime('%d-%b-%Y')
 	return render_template('es/index.html', title=title, dates=dates, grid=grid)
 
 

@@ -11,7 +11,7 @@
 		<p class="lead mt-0">La vuelta es: {{ dates['round'] }}</p>
 		<p class="lead mt-0">El cuadrante es: {{ dates['quad_name_es'] }}</p>
 		<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
-		<a class="btn btn-link text-center" id="register-link" href="{{url_for('quadrant')}}">Ver Cuadrante</a>
+		<a class="btn btn-link text-center" id="register-link" href="{{url_for('quadrant', year=dates['date'].year, daynbr=dates['date'].timetuple().tm_yday)}}">Ver Cuadrante</a>
 	</div>
 	</div>
 </div>
