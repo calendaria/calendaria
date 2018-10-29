@@ -440,7 +440,7 @@ def calendar():
 
 
 @app.route('/es/date/<int:year>/<int:daynbr>')
-@login_requireds
+@login_required
 def date_details(year, daynbr):
 	d = date_utils.daynbr_to_date(daynbr, year)
 	dates = date_utils.date_vals(d)
