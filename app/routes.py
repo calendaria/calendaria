@@ -181,7 +181,10 @@ def register_es():
 		return redirect(url_for('index'))
 	form = RegistrationESForm()
 	if form.validate_on_submit():
-		new_user = User(email=form.email.data, first_name=form.first_name.data, dob=form.dob.data)
+		new_user = User(email=form.email.data, 
+						first_name=form.first_name.data, 
+						dob=form.dob.data,
+						deriv_date=form.deriv_date.data)
 		new_user.set_password(form.password.data)
 		db.session.add(new_user)
 		db.session.commit()
