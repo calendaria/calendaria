@@ -168,7 +168,7 @@ def login_es():
 	if 'en' in lang.lower():
 		return redirect(url_for('login'))
 	if current_user.is_authenticated:
-		return redirect(url_for('index_es'))
+		return redirect(url_for('index'))
 	form = LoginESForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
@@ -178,7 +178,7 @@ def login_es():
 		login_user(user, remember=form.remember_me.data)
 		next_page = request.args.get('next')
 		if not next_page or url_parse(next_page).netloc != '':
-			next_page = url_for('index_es')
+			next_page = url_for('index')
 		return redirect(next_page)
 	return render_template('es/login.html', title="Ingresar", form=form)
 
