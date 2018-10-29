@@ -35,6 +35,7 @@ IPSTACK_API_KEY = app.config['IPSTACK_API_KEY']
 # Entry point is the calendar now
 @app.route('/')
 @app.route('/es')
+@app.route('/index')
 @app.route('/es/index')
 @login_required
 def calendar():
