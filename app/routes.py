@@ -443,6 +443,6 @@ def calendar():
 @login_required
 def date_details(year, daynbr):
 	d = date_utils.daynbr_to_date(daynbr, year)
-	dates = date_utils.date_vals(d)
+	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date)
 	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
 	return render_template('es/date_details.html', dates=dates)
