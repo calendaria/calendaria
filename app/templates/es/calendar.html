@@ -3,9 +3,16 @@
 {% block content %}
 	<div class="style-jumbo mb-5">
 		<div class="jumbotron text-center mb-3 shadow-lg">
-			<h1 style="font-weight: 300; line-height: 1.2">Fechas Calendaria {{calendar['year']}}</h2>
+			<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
+			<p class="lead mt-0">Hoy es {{ calendar['today'].strftime("%d/%m/%Y") }} </p>
+			<p class="lead mt-0">Días de vida: {{ calendar['days_alive'] }}</p>
+			<h4>En CALENDARIA</h4>
+			<p class="lead mt-0">La vuelta es: {{ calendar['round'] }}</p>
+			<p class="lead mt-0">El cuadrante es: {{ calendar['quad_name_es'] }}</p>
+			<p class="lead mt-0">El paso es: {{ calendar['step'] }}</p>
 		</div>
 	</div>
+	<h2 style="font-weight: 300; line-height: 1.2">Fechas Calendaria {{calendar['year']}}</h2>
 	<!-- Tabs to display calendar -->
 	<nav>
 		<div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">

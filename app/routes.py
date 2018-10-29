@@ -38,7 +38,7 @@ IPSTACK_API_KEY = app.config['IPSTACK_API_KEY']
 @app.route('/index')
 @app.route('/es/index')
 @login_required
-def calendar():
+def index():
 	# Get user's local time by using IPstack API
 	tz = get_tz(IPSTACK_API_KEY, request=request)
 	# Set the locale based on language to display the right language for dates
@@ -46,6 +46,8 @@ def calendar():
 	calendar = {}
 	calendar['today'] = set_tz_today(tz)
 	calendar['year'] = datetime.today().year
+	calendar['days_alive'] = date_utils.day_diff(dates['today'],
+	    current_user.dob.date())
 	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
 	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
 	return render_template('es/calendar.html', calendar=calendar)
@@ -63,7 +65,7 @@ def date_details(year, daynbr):
 # Calendar view
 @app.route('/quadrant')
 @login_required
-def index():
+def quadrant():
     # Get/Set user's local language
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
@@ -94,7 +96,7 @@ def index():
 # Spanish index
 @app.route('/es/quadrant')
 @login_required
-def index_es():
+def quadrant_es():
     # Get/Set user's local language
 	# lang = choose_best_lang(request, SUP_LANGUAGES)
 	lang = 'es'
