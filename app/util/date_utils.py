@@ -343,6 +343,8 @@ def daynbr_to_date(daynbr, year):
 def date_vals(indate, deriv_date=None):
 	date_vals = {}
 	date_vals['date'] = indate
+	date_vals['quad_name_es'] = quadrant_name(indate)
+	date_vals['step'] = step(indate)
 	date_vals['round'] = round_nbr(indate)
 	date_vals['quad'] = quadrant(indate)
 	date_vals['round_day'] = round_day_nbr(indate)
@@ -357,6 +359,11 @@ def date_vals(indate, deriv_date=None):
 	date_vals['cg'] = cg(indate)
 	date_vals['cg_day'] = cg_day(indate)
 	date_vals['cg_tot_days'] = cg_tot_days(indate)
+	if derv_date:
+		date_vals['cp_tot_days'] = cp_tot_days(indate, deriv_date)
+		date_vals['cp'] = cp(indate, deriv_date)
+		date_vals['cp_day'] = cp_day(indate, deriv_date)
+
 	return date_vals
 
 
