@@ -359,7 +359,7 @@ def date_vals(indate, deriv_date=None):
 	date_vals['cg'] = cg(indate)
 	date_vals['cg_day'] = cg_day(indate)
 	date_vals['cg_tot_days'] = cg_tot_days(indate)
-	if derv_date:
+	if deriv_date:
 		date_vals['cp_tot_days'] = cp_tot_days(indate, deriv_date)
 		date_vals['cp'] = cp(indate, deriv_date)
 		date_vals['cp_day'] = cp_day(indate, deriv_date)
