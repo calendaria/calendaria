@@ -430,9 +430,19 @@ def test_locale2():
 
 
 @app.route('/es/calendar')
+@login_required
 def calendar():
 	calendar = {}
 	calendar['year'] = datetime.today().year
 	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
 	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
 	return render_template('es/calendar.html', calendar=calendar)
+
+
+@app.route('/es/date/<int:year>/<int:daynbr>')
+@login_requireds
+def date_details(year, daynbr):
+	d = date_utils.daynbr_to_date(daynbr, year)
+	dates = date_utils.date_vals(d)
+	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
+	return render_template('date_details.html', dates=dates)

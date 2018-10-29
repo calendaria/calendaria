@@ -340,6 +340,26 @@ def daynbr_to_date(daynbr, year):
 	return (date(year, 1, 1) + timedelta(days=daynbr-1))
 
 
+def date_vals(indate, deriv_date=None):
+	date_vals = {}
+	date_vals['date'] = indate
+	date_vals['round'] = round_nbr(indate)
+	date_vals['quad'] = quadrant(indate)
+	date_vals['round_day'] = round_day_nbr(indate)
+	date_vals['day_nbr'] = daynbr(indate)
+	date_vals['week_nbr'] = weeknbr(indate)
+	date_vals['weekday'] = weekday_str(indate)
+	date_vals['freq_neg'] = freq_neg(indate)
+	date_vals['gap_date'] = gap_date(indate)
+	date_vals['gap'] = date_vals['gap_date'].strftime('%d')
+	date_vals['fs'] = fs(indate)
+	date_vals['au'] = au(indate)
+	date_vals['cg'] = cg(indate)
+	date_vals['cg_day'] = cg_day(indate)
+	date_vals['cg_tot_days'] = cg_tot_days(indate)
+	return date_vals
+
+
 # Test Function
 def testing(indate, n=1):
 	for i in range(n):
