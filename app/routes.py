@@ -59,6 +59,8 @@ def index():
 @app.route('/es/date/<int:year>/<int:daynbr>')
 @login_required
 def date_details(year, daynbr):
+	# Set the locale
+	locale.setlocale(locale.LC_TIME, ES_LC)
 	d = date_utils.daynbr_to_date(daynbr, year)
 	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date())
 	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
