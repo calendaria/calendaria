@@ -32,9 +32,35 @@ SUP_LANGUAGES = app.config['LANGUAGES']
 IPSTACK_API_KEY = app.config['IPSTACK_API_KEY']
 
 
-# Entry point, index
+# Entry point is the calendar now
 @app.route('/')
-@app.route('/index')
+@app.route('/es')
+@app.route('/es/index')
+@login_required
+def calendar():
+	# Get user's local time by using IPstack API
+	tz = get_tz(IPSTACK_API_KEY, request=request)
+	# Set the locale based on language to display the right language for dates
+	locale.setlocale(locale.LC_TIME, ES_LC)
+	calendar = {}
+	calendar['today'] = set_tz_today(tz)
+	calendar['year'] = datetime.today().year
+	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
+	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
+	return render_template('es/calendar.html', calendar=calendar)
+
+
+@app.route('/es/date/<int:year>/<int:daynbr>')
+@login_required
+def date_details(year, daynbr):
+	d = date_utils.daynbr_to_date(daynbr, year)
+	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date())
+	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
+	return render_template('es/date_details.html', dates=dates)
+
+
+# Calendar view
+@app.route('/quadrant')
 @login_required
 def index():
     # Get/Set user's local language
@@ -65,8 +91,7 @@ def index():
 
 
 # Spanish index
-@app.route('/es')
-@app.route('/es/index')
+@app.route('/es/quadrant')
 @login_required
 def index_es():
     # Get/Set user's local language
@@ -429,20 +454,4 @@ def test_locale2():
         local_date=local_date, other_date=other_date)
 
 
-@app.route('/es/calendar')
-@login_required
-def calendar():
-	calendar = {}
-	calendar['year'] = datetime.today().year
-	calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
-	calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
-	return render_template('es/calendar.html', calendar=calendar)
 
-
-@app.route('/es/date/<int:year>/<int:daynbr>')
-@login_required
-def date_details(year, daynbr):
-	d = date_utils.daynbr_to_date(daynbr, year)
-	dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date())
-	dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
-	return render_template('es/date_details.html', dates=dates)
