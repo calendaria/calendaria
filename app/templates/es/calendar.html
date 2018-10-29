@@ -10,6 +10,7 @@
 			<p class="lead mt-0">La vuelta es: {{ calendar['round'] }}</p>
 			<p class="lead mt-0">El cuadrante es: {{ calendar['quad_name_es'] }}</p>
 			<p class="lead mt-0">El paso es: {{ calendar['step'] }}</p>
+			<a class="btn btn-link text-center" id="register-link" href="{{url_for('quadrant')}}">Ver Cuadrante</a>
 		</div>
 	</div>
 	<h2 class="text-center mb-4" style="font-weight: 300; line-height: 1.2">Calendaria {{calendar['year']}}</h2>

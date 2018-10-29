@@ -1,17 +1,25 @@
 <!-- Calendar Table -->
 <table class="table table-hover mt-3" style="font-size: 0.85rem;">
 	<thead class="text-center" id="quadrant-header">
-			<tr>
-		        <th style="border-radius: 6px 0 0 0;"></th>
-		        <th>LO</th>
-		        <th>IN</th>
-		        <th>HU</th>
-		        <th>CO</th>
-		        <th>LO</th>
-		        <th>IN</th>
-		        <th>HU</th>
-		        <th style="border-radius: 0 6px 0 0;">CO</th>
-			</tr>
+		<tr>
+	        <th style="border-radius: 6px 0 0 0;"></th>
+	        <th>HUMANO</th>
+	        <th>INHUMANO</th>
+	        <th style="border-radius: 0 6px 0 0;"></th>
+		</tr>
+	</thead>
+	<thead class="text-center" id="quadrant-header">
+		<tr>
+	        <th style="border-radius: 0 0 0 0;"></th>
+	        <th>LO</th>
+	        <th>IN</th>
+	        <th>HU</th>
+	        <th>CO</th>
+	        <th>LO</th>
+	        <th>IN</th>
+	        <th>HU</th>
+	        <th style="border-radius: 0 0 0 0;">CO</th>
+		</tr>
 	</thead>
 	<tbody>
 		{% for i in range(22) %}
@@ -55,16 +63,24 @@
 		{% endfor %}
     </tbody>
     <thead class="text-center" id="quadrant-header">
-			<tr>
-		        <th style="border-radius: 0 0 0 6px;"></th>
-		        <th>LO</th>
-		        <th>IN</th>
-		        <th>HU</th>
-		        <th>CO</th>
-		        <th>LO</th>
-		        <th>IN</th>
-		        <th>HU</th>
-		        <th style="border-radius: 0 0 6px 0;">CO</th>
-			</tr>
+		<tr>
+	        <th style="border-radius: 0 0 0 0;"></th>
+	        <th>LO</th>
+	        <th>IN</th>
+	        <th>HU</th>
+	        <th>CO</th>
+	        <th>LO</th>
+	        <th>IN</th>
+	        <th>HU</th>
+	        <th style="border-radius: 0 0 0 0;">CO</th>
+		</tr>
+	</thead>
+	<thead class="text-center" id="quadrant-header">
+		<tr>
+	        <th style="border-radius: 0 0 0 6px;"></th>
+	        <th>LOGICO</th>
+	        <th>CONTEXTO</th>
+	        <th style="border-radius: 0 0 6px 0;"></th>
+		</tr>
 	</thead>
 </table>
