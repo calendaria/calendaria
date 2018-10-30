@@ -3,3 +3,4 @@ __pycache__
 *.pyc
 todo.txt
 app.db
+config_local.py

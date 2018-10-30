@@ -24,8 +24,8 @@ import json
 
 
 # Define Locale keys for the server
-EN_LC = 'en_US'
-ES_LC = 'es_ES'
+EN_LC = app.config['LOCALES']['en']
+ES_LC = app.config['LOCALES']['es']
 
 # API Keys and languages, only spanish and english supported
 SUP_LANGUAGES = app.config['LANGUAGES']

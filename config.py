@@ -16,8 +16,6 @@ class Config(object):
 	# Debug
 	DEBUG = True
 	# DB
-	# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-	# SQLALCHEMY_DATABASE_URI = SQL_DB_URI
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SQLALCHEMY_POOL_RECYCLE = 299
@@ -31,6 +29,8 @@ class Config(object):
 	SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 	# Languages and location
 	LANGUAGES = ['en', 'en_US', 'es', 'es_ES', 'es_AR', 'es-419', 'es_419']
+	LOCALES = {'en': 'en_US', 'es': 'es_ES'}
 	IPSTACK_API_KEY = os.environ.get('IPSTACK_API_KEY')
+
 
 

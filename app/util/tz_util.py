@@ -17,14 +17,14 @@ def get_location_dict(api_key, request=None, ip=None):
     try:
         r = requests.get(url)
     except:
-        return {'country_name': 'Etc/UTC'}
+        return {'country_name': None}
     return json.loads(r.text)
 
 
 def get_tz_str(api_key, request=None, ip=None):
     loc_dict = get_location_dict(api_key=api_key, request=request, ip=ip)
     # If location request didn't go through successfully
-    if loc_dict['country_name'].lower() == 'etc/utc' or loc_dict['country_name'] == None:
+    if loc_dict['country_name'] == None:
         return 'Etc/UTC'
     # Handling most common cases (Arg and SF)
     if loc_dict['country_name'].lower() == 'argentina':
