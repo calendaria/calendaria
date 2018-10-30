@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 from config import Config
-from config_local import ConfigLocal
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -16,6 +15,7 @@ app = Flask(__name__)
 if os.environ.get('ENV') == 'production':
 	app.config.from_object(Config)
 else:
+	from config_local import ConfigLocal
 	app.config.from_object(ConfigLocal)
 
 # Filters
