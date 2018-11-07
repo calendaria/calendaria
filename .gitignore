@@ -4,3 +4,4 @@ __pycache__
 todo.txt
 app.db
 config_local.py
+.idea

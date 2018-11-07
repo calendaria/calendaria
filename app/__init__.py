@@ -16,6 +16,7 @@ if os.environ.get('ENV') == 'production':
 	app.config.from_object(Config)
 else:
 	from config_local import ConfigLocal
+	print('>>>>>>>>>>>>> Running Locally >>>>>>>>>>>>>')
 	app.config.from_object(ConfigLocal)
 
 # Filters
