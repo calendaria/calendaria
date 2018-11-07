@@ -67,6 +67,10 @@ def date_details(year, daynbr):
     dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
     dates['is_rof'] = date_utils.rof(dates['date'])
     dates['app_matrix'] = date_utils.apparatus_matrix(dates['date'])
+    dates['app_nat_nbr'] = date_utils.apparatus_nbr(current_user.dob.date())
+    dates['app_nat_type'] = date_utils.apparatus_type(current_user.dob.date())
+    dates['app_nat_offset'] = date_utils.apparatus_offset(current_user.dob.date())
+    dates['app_nat_lived'] = date_utils.apparatus_lived(dates['date'], current_user.dob.date())
     return render_template('es/date_details.html', dates=dates)
 
 

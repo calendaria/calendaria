@@ -254,6 +254,12 @@ def apparatus_matrix(indate):
 	return app_matrix
 
 
+# Lived apparatus
+def apparatus_lived(indate, bday):
+	diff = indate.year - bday.year
+	return math.ceil(diff/4)
+
+
 # Check if the value is inside the Ring of Fire
 def rof(indate):
 	daynbr_ = daynbr(indate)
