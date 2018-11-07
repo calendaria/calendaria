@@ -4,7 +4,11 @@
 	<div class="style-jumbo mb-5">
 		<div class="jumbotron text-center mb-3 shadow-lg">
 			<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
-			<p class="lead mt-0">Hoy es {{ calendar['today'].strftime("%d/%m/%Y") }} </p>
+			<p class="lead mt-0">Hoy es
+				<a class="btn btn-info" href="{{url_for('date_details', year=calendar['year'], daynbr=calendar['today'].timetuple().tm_yday)}}">
+					<strong>{{ calendar['today'].strftime("%d/%m/%Y") }}</strong>
+				</a>
+			</p>
 			<p class="lead mt-0">Días de vida: {{ calendar['days_alive'] }}</p>
 			<h4>En CALENDARIA</h4>
 			<p class="lead mt-0">La vuelta es: {{ calendar['round'] }}</p>
@@ -12,7 +16,7 @@
 			<p class="lead mt-0">El paso es: {{ calendar['step'] }}</p>
 		</div>
 	</div>
-	<h2 class="text-center mb-4" style="font-weight: 300; line-height: 1.2">Calendaria {{calendar['year']}}</h2>
+	<h2 class="text-center mb-4">Calendaria {{calendar['year']}}</h2>
 	<!-- Tabs to display calendar -->
 	<nav>
 		<div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
