@@ -1,4 +1,5 @@
 from datetime import timedelta, date
+import math
 
 # Generate a spanish version of the week day names
 ES_WEEKDAYS = ["Domingo",
@@ -170,6 +171,49 @@ def is_leap_yr(indate):
 	else:
 		year = indate
 		return (( year%400 == 0) or (( year%4 == 0 ) and ( year%100 != 0)))
+
+
+# Calculate the apparatus nbr
+def apparatus_nbr(indate):
+	return math.ceil(indate.year/4)
+
+
+# Calculate the apparatus offset
+def apparatus_offset(indate):
+	return indate.year/4 - int(indate.year/4)
+
+
+# Calculate the apparatus type based on the offset
+def apparatus_type(indate):
+	off = apparatus_offset(indate)
+	if off == 0.0:
+		return ('BICIESTO', 'DECIDE')
+	elif off == 0.25:
+		return ('COMUN TIPO 1', 'ASUME')
+	elif off == 0.5:
+		return ('COMUN TIPO 2', 'ASIMILA')
+	elif off == 0.75:
+		return ('COMUN TIPO 3', 'DESAFIA')
+	else:
+		raise ValueError('Offset values can only be 0, 0.25, 0.5, 0.75')
+
+
+# Calculate apparatus f+
+def apparatus_fplus(indate):
+	off = apparatus_offset(indate)
+	if off == 0.0:
+		return 365*3 + daynbr(indate)
+	elif off == 0.25:
+		return daynbr(indate)
+	elif off == 0.5:
+		return 365 + daynbr(indate)
+	elif off == 0.75:
+		return 365*2 + daynbr(indate)
+
+
+# Calculate apparatus f- based on f+
+def apparatus_fneg(indate):
+	return 1461 - apparatus_fplus(indate)
 
 
 # Check if the value is inside the Ring of Fire
