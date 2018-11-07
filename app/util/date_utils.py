@@ -187,13 +187,13 @@ def apparatus_offset(indate):
 def apparatus_type(indate):
 	off = apparatus_offset(indate)
 	if off == 0.0:
-		return ('BICIESTO', 'DECIDE')
+		return ('B', 'DECIDE')
 	elif off == 0.25:
-		return ('COMUN TIPO 1', 'ASUME')
+		return ('CT1', 'ASUME')
 	elif off == 0.5:
-		return ('COMUN TIPO 2', 'ASIMILA')
+		return ('CT2', 'ASIMILA')
 	elif off == 0.75:
-		return ('COMUN TIPO 3', 'DESAFIA')
+		return ('CT3', 'DESAFIA')
 	else:
 		raise ValueError('Offset values can only be 0, 0.25, 0.5, 0.75')
 
@@ -421,7 +421,11 @@ def date_vals(indate, deriv_date=None):
 		date_vals['cp_tot_days'] = cp_tot_days(indate, deriv_date)
 		date_vals['cp'] = cp(indate, deriv_date)
 		date_vals['cp_day'] = cp_day(indate, deriv_date)
-
+	date_vals['app_nbr'] = apparatus_nbr(indate)
+	date_vals['app_type'] = apparatus_type(indate)
+	date_vals['app_offset'] = apparatus_offset(indate)
+	date_vals['app_fp'] = apparatus_fplus(indate)
+	date_vals['app_fn'] = apparatus_fneg(indate)
 	return date_vals
 
 
