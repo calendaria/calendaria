@@ -7,10 +7,14 @@
 		<h2 class="display-4">Cuadrante: {{ dates['date'].strftime("%d/%m/%Y") }}</h2>
 		<p class="lead mt-0">Días de vida: {{ dates['days_alive'] }}</p>
 		<br>
-		<h4>En CALENDARIA</h4>
-		<p class="lead mt-0">La vuelta es: {{ dates['round'] }}</p>
-		<p class="lead mt-0">El cuadrante es: {{ dates['quad_name_es'] }}</p>
-		<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
+		{% if not dates['is_rof'] %}
+			<h4>En CALENDARIA</h4>
+			<p class="lead mt-0">La vuelta es: {{ dates['round'] }}</p>
+			<p class="lead mt-0">El cuadrante es: {{ dates['quad_name_es'] }}</p>
+			<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
+		{% else %}
+			<p class="lead mt-0">Anillo de fuego dia: {{ dates['daynbr'] }}</p>
+		{% endif %}
 	</div>
 </div>
 <div class="col-sm-4 offset-sm-4 w-20 mt-2 mb-2">

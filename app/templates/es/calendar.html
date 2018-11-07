@@ -10,10 +10,14 @@
 				</a>
 			</p>
 			<p class="lead mt-0">Días de vida: {{ calendar['days_alive'] }}</p>
-			<h4>En CALENDARIA</h4>
-			<p class="lead mt-0">La vuelta es: {{ calendar['round'] }}</p>
-			<p class="lead mt-0">El cuadrante es: {{ calendar['quad_name_es'] }}</p>
-			<p class="lead mt-0">El paso es: {{ calendar['step'] }}</p>
+			{% if not calendar['is_rof'] %}
+				<h4>En CALENDARIA</h4>
+				<p class="lead mt-0">La vuelta es: {{ calendar['round'] }}</p>
+				<p class="lead mt-0">El cuadrante es: {{ calendar['quad_name_es'] }}</p>
+				<p class="lead mt-0">El paso es: {{ calendar['step'] }}</p>
+			{% else %}
+				<p class="lead mt-0">Anillo de fuego dia: {{ calendar['daynbr'] }}</p>
+			{% endif %}
 		</div>
 	</div>
 	<h2 class="text-center mb-4">Calendaria {{calendar['year']}}</h2>

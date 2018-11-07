@@ -52,6 +52,7 @@ def index():
                                                  current_user.dob.date())
     calendar['rnd_1_11'] = date_utils.create_calendar(calendar['year'])
     calendar['rnd_12_22'] = date_utils.create_calendar(calendar['year'], from_round=12, to_round=22)
+    calendar['is_rof'] = date_utils.rof(calendar['today'])
     calendar['rof'] = date_utils.rof_days(calendar['year'])
     return render_template('es/calendar.html', calendar=calendar)
 
@@ -64,6 +65,7 @@ def date_details(year, daynbr):
     d = date_utils.daynbr_to_date(daynbr, year)
     dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date())
     dates['days_alive'] = date_utils.day_diff(dates['date'], current_user.dob.date())
+    dates['is_rof'] = date_utils.rof(dates['date'])
     return render_template('es/date_details.html', dates=dates)
 
 
