@@ -35,12 +35,14 @@ STEPS = {
 def day_diff (date1, date2):
 	return (date1 - date2).days
 
+
 # Return the day of the year
 def daynbr(indate):
 	try:
 		return indate.timetuple().tm_yday
 	except:
 		return "Invalid input"
+
 
 # Return the week number
 def weeknbr(indate):
@@ -49,9 +51,11 @@ def weeknbr(indate):
 	else:
 		return int( (daynbr(indate)/7) ) + 1
 
+
 # Return day of the week (int)
 def weekday(indate):
 	return int( indate.strftime("%w") )
+
 
 # Round
 def round_nbr(indate):
@@ -60,6 +64,7 @@ def round_nbr(indate):
 	else:
 		return int(daynbr(indate)/16)
 
+
 # Round day
 def round_day_nbr(indate):
 	if daynbr(indate)%16 != 0:
@@ -67,12 +72,14 @@ def round_day_nbr(indate):
 	else:
 		return 16
 
+
 # Quadrant
 def quadrant(indate):
 	if daynbr(indate)%4 != 0:
 		return int(round_day_nbr(indate)/4) + 1
 	else:
 		return int(round_day_nbr(indate)/4)
+
 
 def quadrant_name(indate, lang='es'):
 	quad = quadrant(indate)
@@ -84,17 +91,21 @@ def quadrant_name(indate, lang='es'):
 	]
 	return quad_names[quad-1][lang]
 
+
 # Step name
 def step(indate):
 	return STEPS[round_day_nbr(indate)]
+
 
 # Return day of the week (int) in spanish
 def weekday_str_es(indate):
 	return ES_WEEKDAYS[weekday(indate)]
 
+
 # Return day of the week (int) in spanish
 def weekday_str(indate):
 	return indate.strftime("%A")
+
 
 # Neg Freq: Day of year - Total nbr of years
 def freq_neg(indate):
@@ -103,9 +114,11 @@ def freq_neg(indate):
 	diff += timedelta(days=1)
 	return diff.days
 
+
 # GAP: Day nbr + Neg Freq
 def gap(indate):
 	return daynbr(indate) - freq_neg(indate)
+
 
 # GAP date: Current date- gap
 def gap_date(indate):
@@ -118,6 +131,7 @@ def cg_tot_days(indate):
 	diff = indate - cg_date
 	return diff.days
 
+
 # Calculate the Global Quarantine based on the CG Tot days
 def cg(indate):
 	return int(cg_tot_days(indate)/39) + 1
@@ -126,6 +140,7 @@ def cg(indate):
 def cg_day(indate):
 	return cg_tot_days(indate)%39 + 1
 
+
 # Total days from Personal Quarantine (Default is Dolores)
 def cp_tot_days(indate, deriv_date=None):
 	if not deriv_date:
@@ -133,17 +148,20 @@ def cp_tot_days(indate, deriv_date=None):
 	diff = indate - deriv_date
 	return diff.days
 
+
 # Calculate the Personal Quarantine based on the CP Tot days
 def cp(indate, deriv_date=None):
 	if not deriv_date:
 		return None
 	return int(cp_tot_days(indate, deriv_date)/39) + 1
 
+
 # Calculate the Personal Quarantine day
 def cp_day(indate, deriv_date=None):
 	if not deriv_date:
 		return None
 	return cp_tot_days(indate, deriv_date)%39 + 1
+
 
 # Total days from Fifth Stage date: 28 Aug 2016
 def fs(indate):
@@ -156,6 +174,7 @@ def au(indate):
 	au_date = date(2017, 8, 26)
 	diff = indate - au_date
 	return diff.days
+
 
 # Calculate the days alive from certain date
 def days_alive(indate, bday):
@@ -214,6 +233,25 @@ def apparatus_fplus(indate):
 # Calculate apparatus f- based on f+
 def apparatus_fneg(indate):
 	return 1461 - apparatus_fplus(indate)
+
+
+# Apparatus matrix (previous and next f+ and f- for all apparatus years)
+def apparatus_matrix(indate):
+	app_matrix = []
+	off = apparatus_offset(indate)
+	yr = indate.year
+	if off == 0.25:
+		yrs = [0, 1, 2, 3]
+	elif off == 0.5:
+		yrs = [-1, 0, 1, 2]
+	elif off == 0.75:
+		yrs = [-2, -1, 0, 1]
+	elif off == 0.0:
+		yrs = [-3, -2, -1, yr]
+	for y in yrs:
+		d = date(indate.year+y, indate.month, indate.day)
+		app_matrix.append([apparatus_fplus(d)] + [apparatus_fneg(d)] + [d.year])
+	return app_matrix
 
 
 # Check if the value is inside the Ring of Fire
