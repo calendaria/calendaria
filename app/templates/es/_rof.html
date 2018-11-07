@@ -1,10 +1,15 @@
 <!-- Anillo de fuego -->
 <div class="mt-4"></div>
-{% for i in range(14) %}
-	{% set daynbr = 353 + i %}
-	{% set daydate = 19 + i %}
+{% for e in calendar['rof'] %}
 	<div class="row">
-		<div class="mx-auto">{{daynbr}} <span class="pl-5">{{daydate}}/12</span></div>
+		<div class="mx-auto">
+			{{e[0]}}
+			<span class="pl-5">
+				<a href="{{url_for('date_details', year=calendar['year'], daynbr=e[0])}}">
+					{{e[1].strftime('%d/%m')}}
+				</a>
+			</span>
+		</div>
 	</div>
 {% endfor %}
 <div class="mb-4"></div>

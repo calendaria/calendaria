@@ -74,14 +74,14 @@ def quadrant(indate):
 		return int(round_day_nbr(indate)/4)
 
 def quadrant_name(indate, lang='es'):
-    quad = quadrant(indate)
-    quad_names = [
-        {'es': 'LOGICO', 'en': 'LOGIC'},
-        {'es': 'INHUMANO', 'en': 'INHUMAN'},
-        {'es': 'HUMANO', 'en': 'HUMAN'},
-        {'es': 'CONTEXTO', 'en': 'CONTEXT'},
-    ]
-    return quad_names[quad-1][lang]
+	quad = quadrant(indate)
+	quad_names = [
+		{'es': 'LOGICO', 'en': 'LOGIC'},
+		{'es': 'INHUMANO', 'en': 'INHUMAN'},
+		{'es': 'HUMANO', 'en': 'HUMAN'},
+		{'es': 'CONTEXTO', 'en': 'CONTEXT'},
+	]
+	return quad_names[quad-1][lang]
 
 # Step name
 def step(indate):
@@ -127,22 +127,22 @@ def cg_day(indate):
 
 # Total days from Personal Quarantine (Default is Dolores)
 def cp_tot_days(indate, deriv_date=None):
-    if not deriv_date:
-        return None
-    diff = indate - deriv_date
-    return diff.days
+	if not deriv_date:
+		return None
+	diff = indate - deriv_date
+	return diff.days
 
 # Calculate the Personal Quarantine based on the CP Tot days
 def cp(indate, deriv_date=None):
-    if not deriv_date:
-        return None
-    return int(cp_tot_days(indate, deriv_date)/39) + 1
+	if not deriv_date:
+		return None
+	return int(cp_tot_days(indate, deriv_date)/39) + 1
 
 # Calculate the Personal Quarantine day
 def cp_day(indate, deriv_date=None):
-    if not deriv_date:
-        return None
-    return cp_tot_days(indate, deriv_date)%39 + 1
+	if not deriv_date:
+		return None
+	return cp_tot_days(indate, deriv_date)%39 + 1
 
 # Total days from Fifth Stage date: 28 Aug 2016
 def fs(indate):
@@ -171,6 +171,7 @@ def is_leap_yr(indate):
 		year = indate
 		return (( year%400 == 0) or (( year%4 == 0 ) and ( year%100 != 0)))
 
+
 # Check if the value is inside the Ring of Fire
 def rof(indate):
 	daynbr_ = daynbr(indate)
@@ -180,6 +181,19 @@ def rof(indate):
 		return True
 	else:
 		return False
+
+
+def rof_days(yr):
+	d = date(yr, 1, 1)
+	rof_days = []
+	if is_leap_yr(d):
+		for i in range(354, 367):
+			rof_days += [(i, daynbr_to_date(i, yr))]
+	else:
+		for i in range(353, 366):
+			rof_days += [(i, daynbr_to_date(i, yr))]
+	return rof_days
+
 
 # Calculate the whole round values for desired round and year
 def round_vals(rnd, year, deriv_date=None):
@@ -196,11 +210,11 @@ def round_vals(rnd, year, deriv_date=None):
 	cal_dict['round'] = [rnd for i in range(1, 17)]
 
 	if not deriv_date:
-	    cp_tot_days_ = ['N/A']*16
-	    cp_ = ['N/A']*16
-	    cp_day_ = ['N/A']*16
+		cp_tot_days_ = ['N/A']*16
+		cp_ = ['N/A']*16
+		cp_day_ = ['N/A']*16
 	else:
-	    cp_tot_days_, cp_, cp_day_= [], [], []
+		cp_tot_days_, cp_, cp_day_= [], [], []
 
 	# Initialize the lists to put the different variables
 	dates, dates_str, day_nbr, week_nbr, weekday = [], [], [], [], []
@@ -239,9 +253,9 @@ def round_vals(rnd, year, deriv_date=None):
 			quads += [quadrant(curr_date)]
 			quad_names_es += [quadrant_name(curr_date)]
 			if deriv_date:
-			    cp_tot_days_ += [cp_tot_days(curr_date, deriv_date)]
-			    cp_ += [cp(curr_date, deriv_date)]
-			    cp_day_ += [cp_day(curr_date, deriv_date)]
+				cp_tot_days_ += [cp_tot_days(curr_date, deriv_date)]
+				cp_ += [cp(curr_date, deriv_date)]
+				cp_day_ += [cp_day(curr_date, deriv_date)]
 
 	#Update the dictionary
 	cal_dict['dates'] = dates
@@ -377,4 +391,4 @@ def testing(indate, n=1):
 			  "Rnd Day:", round_day_nbr(d), "|",
 			  "Step:", step(d), "|",
 			  "Quadrant:", quadrant(d)
-	    )
+		)
