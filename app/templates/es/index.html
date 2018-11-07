@@ -13,7 +13,11 @@
 		<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
 	</div>
 </div>
-
+<div class="col-sm-4 offset-sm-4 w-20 mt-2 mb-2">
+	<a class="btn btn-info btn-block text-center"  href="{{url_for('date_details', year=dates['date'].year, daynbr=dates['daynbr'])}}">
+		Ver por fecha
+	</a>
+</div>
 {% if not dates['is_rof'] %}
     <!-- Quadrant tab navigation -->
     <nav>
