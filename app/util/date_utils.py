@@ -442,7 +442,7 @@ def daynbr_to_date(daynbr, year):
 	return (date(year, 1, 1) + timedelta(days=daynbr-1))
 
 
-def date_vals(indate, deriv_date=None):
+def date_vals(indate, deriv_date=None, dob=None):
 	date_vals = {}
 	date_vals['date'] = indate
 	date_vals['quad_name_es'] = quadrant_name(indate)
@@ -461,6 +461,7 @@ def date_vals(indate, deriv_date=None):
 	date_vals['cg'] = cg(indate)
 	date_vals['cg_day'] = cg_day(indate)
 	date_vals['cg_tot_days'] = cg_tot_days(indate)
+	date_vals['is_rof'] = rof(date_vals['date'])
 	if deriv_date:
 		date_vals['cp_tot_days'] = cp_tot_days(indate, deriv_date)
 		date_vals['cp'] = cp(indate, deriv_date)
@@ -470,6 +471,20 @@ def date_vals(indate, deriv_date=None):
 	date_vals['app_offset'] = apparatus_offset(indate)
 	date_vals['app_fp'] = apparatus_fplus(indate)
 	date_vals['app_fn'] = apparatus_fneg(indate)
+	date_vals['af'] = 4667 + daynbr(indate)
+	date_vals['aff'] = 7664 + daynbr(indate)
+	date_vals['app_matrix'] = apparatus_matrix(date_vals['date'])
+	if dob:
+		date_vals['days_alive'] = day_diff(date_vals['date'], dob)
+		date_vals['app_nat_nbr'] = apparatus_nbr(dob)
+		date_vals['app_nat_type'] = apparatus_type(dob)
+		date_vals['app_nat_offset'] = apparatus_offset(dob)
+		date_vals['app_nat_lived'] = apparatus_lived(date_vals['date'], dob)
+		date_vals['fp_nat'] = daynbr(dob)
+		date_vals['fn_nat'] = freq_neg(dob)
+		date_vals['gap_nat'] = date_vals['fp_nat'] - date_vals['fn_nat']
+		date_vals['ftp'] = date_vals['day_nbr'] + date_vals['fp_nat']
+		date_vals['ftn'] = date_vals['freq_neg'] + date_vals['fn_nat']
 	return date_vals
 
 

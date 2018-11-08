@@ -1,35 +1,50 @@
 <div class="container mt-2">
-	<h5>Global</h5>
+	<h5>Contadores Personales</h5>
 	<table class="table table-hover">
 		<tbody>
 			<tr>
-				<td style="width: 45%;"><strong>CG</strong></td>
-				<td class="text-left">{{dates['cg']}}</td>
+				<td style="width: 45%;"><strong>FP+</strong></td>
+				<td class="text-left">{{dates['fp_nat']}}</td>
 			</tr>
 			<tr>
-				<td style="width: 45%;"><strong>NDCG</strong></td>
-				<td class="text-left">{{dates['cg_day']}}</td>
+				<td style="width: 45%;"><strong>FP-</strong></td>
+				<td class="text-left">{{dates['fn_nat']}}</td>
 			</tr>
 			<tr>
-				<td style="width: 45%;"><strong>DCG</strong></td>
-				<td class="text-left">{{dates['cg_tot_days']}}</td>
+				<td style="width: 45%;"><strong>GAP</strong></td>
+				<td class="text-left">{{dates['gap_nat']}}</td>
 			</tr>
-		</tbody>
-	</table>
-	<h5>Personal</h5>
-	<table class="table table-hover">
-		<tbody>
+			<tr>
+				<td style="width: 45%;"><strong>Dias de Vida</strong></td>
+				<td class="text-left">{{dates['days_alive']}}</td>
+			</tr>
 			<tr>
 				<td style="width: 45%;"><strong>CP</strong></td>
 				<td class="text-left">{{dates['cp']}}</td>
+			</tr>
+			<tr>
+				<td style="width: 45%;"><strong>DCP</strong></td>
+				<td class="text-left">{{dates['cp_tot_days']}}</td>
 			</tr>
 			<tr>
 				<td style="width: 45%;"><strong>NDCP</strong></td>
 				<td class="text-left">{{dates['cp_day']}}</td>
 			</tr>
 			<tr>
-				<td style="width: 45%;"><strong>DCP</strong></td>
-				<td class="text-left">{{dates['cp_tot_days']}}</td>
+				<td style="width: 45%;"><strong>AF</strong></td>
+				<td class="text-left">4667 + {{dates['day_nbr']}} = {{dates['af']}}</td>
+			</tr>
+			<tr>
+				<td style="width: 45%;"><strong>AF(F)</strong></td>
+				<td class="text-left">7664 + {{dates['day_nbr']}} = {{dates['aff']}}</td>
+			</tr>
+			<tr>
+				<td style="width: 45%;"><strong>FTPos + FPPos</strong></td>
+				<td class="text-left">{{dates['ftp']}}</td>
+			</tr>
+			<tr>
+				<td style="width: 45%;"><strong>FTNeg + FPNeg</strong></td>
+				<td class="text-left">{{dates['ftn']}}</td>
 			</tr>
 		</tbody>
 	</table>
