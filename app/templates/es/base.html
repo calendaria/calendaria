@@ -38,13 +38,34 @@
 						<li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Registrarse</a></li>
 					{% else %}
 						<li class="nav-item active">
-							<span class="navbar-text ml-auto">
+							<span class="navbar-text ml-auto mr-3">
 								Hola, 
-									<a href="{{ url_for('profile_es', user_id=current_user.id) }}">
+									<a href="{{ url_for('profile_es', user_id=current_user.id) }}"
+									   data-toggle="tooltip" data-placement="top" title="Ver perfil">
 										{{ current_user.first_name.capitalize() }}
 									</a>
 							</span>
 						</li>
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle mr-3"
+							   href="#" id="navbarDropdown"
+							   role="button"
+							   data-toggle="dropdown"
+							   aria-haspopup="true" aria-expanded="false"
+							   style="color: white;">
+								Secciones
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="{{url_for('index')}}">Calendaria</a>
+								<a class="dropdown-item" href="#">Tumi y Transitos</a>
+								<a class="dropdown-item" href="#">Diagramas</a>
+								<a class="dropdown-item" href="#">Articulos</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Referencias</a>
+							</div>
+						</li>
+
 						<li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">
 							Salir</a>
 						</li>

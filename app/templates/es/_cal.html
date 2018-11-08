@@ -36,14 +36,16 @@
 					{% if i >=0 and i <= 10%}
 						<!-- Top right quad -->
 						<td style="background: #e1f5fe;">
-							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}">
+							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}"
+							   data-toggle="tooltip" data-placement="top" title="Ver detalles fecha">
 								{{calendar[disp_rnd][i][j].strftime('%d/%m')}}
 							</a>
 						</td>
 					{% else %}
 						<!-- Bottom right quad -->
 						<td style="background: #d1c4e9;">
-							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}">
+							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}"
+							   data-toggle="tooltip" data-placement="top" title="Ver detalles fecha">
 								{{calendar[disp_rnd][i][j].strftime('%d/%m')}}
 							</a>
 						</td>
@@ -51,13 +53,15 @@
 				{% else %}
 					{% if i >=0 and i <= 10%}
 						<td style="background: #ffccbc;">
-							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}">
+							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}"
+							   data-toggle="tooltip" data-placement="top" title="Ver detalles fecha">
 								{{calendar[disp_rnd][i][j].strftime('%d/%m')}}
 							</a>
 						</td>
 					{% else %}
 						<td style="background: #c8e6c9;">
-							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}">
+							<a href="{{url_for('date_details', year=calendar[disp_rnd][i][j].year, daynbr=calendar[disp_rnd][i][j].timetuple().tm_yday)}}"
+							   data-toggle="tooltip" data-placement="top" title="Ver detalles fecha">
 								{{calendar[disp_rnd][i][j].strftime('%d/%m')}}
 							</a>
 						</td>

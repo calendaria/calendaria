@@ -5,7 +5,9 @@
 		<div class="jumbotron text-center mb-3 shadow-lg">
 			<h2 class="display-4">Hola {{ current_user.first_name.capitalize() }},</h2>
 			<p class="lead mt-0">Hoy es
-				<a class="btn btn-info" href="{{url_for('date_details', year=calendar['year'], daynbr=calendar['today'].timetuple().tm_yday)}}">
+				<a class="btn btn-info"
+				   href="{{url_for('date_details', year=calendar['year'], daynbr=calendar['today'].timetuple().tm_yday)}}"
+				   data-toggle="tooltip" data-placement="top" title="Ver detalles hoy">
 					<strong>{{ calendar['today'].strftime("%d/%m/%Y") }}</strong>
 				</a>
 			</p>
