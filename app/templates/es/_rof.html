@@ -5,7 +5,8 @@
 		<div class="mx-auto">
 			{{e[0]}}
 			<span class="pl-5">
-				<a href="{{url_for('date_details', year=calendar['year'], daynbr=e[0])}}">
+				<a href="{{url_for('date_details', year=calendar['year'], daynbr=e[0])}}"
+                   data-toggle="tooltip" data-placement="top" title="Ver detalles fecha">
 					{{e[1].strftime('%d/%m')}}
 				</a>
 			</span>
