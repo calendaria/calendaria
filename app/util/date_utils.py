@@ -319,7 +319,7 @@ def round_vals(rnd, year, deriv_date=None, dob=None):
 	freq_negs, gaps, gap_dates, gap_dates_str = [], [], [], []
 	cg_tot_days_, cg_, cg_day_ = [], [], []
 	fs_, au_, quads, quad_names_es = [], [], [], []
-	af, aff  = [], []
+	af, aff, _app_nbr, _app_type, _app_fp, _app_fn,  _app_offset = [], [], [], [], [], [], []
 
 	# Loop and check for the desired round
 	init = date(year, 1, 1)
@@ -353,6 +353,11 @@ def round_vals(rnd, year, deriv_date=None, dob=None):
 			quad_names_es += [quadrant_name(curr_date)]
 			af += [daynbr(curr_date) + 4667]
 			aff += [daynbr(curr_date) + 7664]
+			_app_type += [apparatus_type(curr_date)]
+			_app_offset += [apparatus_offset(curr_date)]
+			_app_nbr += [apparatus_nbr(curr_date)]
+			_app_fp += [apparatus_fplus(curr_date)]
+			_app_fn += [apparatus_fneg(curr_date)]
 			if deriv_date:
 				cp_tot_days_ += [cp_tot_days(curr_date, deriv_date)]
 				cp_ += [cp(curr_date, deriv_date)]
@@ -393,6 +398,11 @@ def round_vals(rnd, year, deriv_date=None, dob=None):
 	cal_dict['gap_nat'] = gap_nat
 	cal_dict['ftp'] = ftp
 	cal_dict['ftn'] = ftn
+	cal_dict['app_nbr'] = _app_nbr
+	cal_dict['app_type'] = _app_type
+	cal_dict['app_offset'] = _app_offset
+	cal_dict['app_fp'] = _app_fp
+	cal_dict['app_fn'] = _app_fn
 	# Return the dictionary
 	return cal_dict
 
