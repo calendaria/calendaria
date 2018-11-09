@@ -125,10 +125,11 @@ def quadrant_es(year, daynbr):
     # Quadrant grid
     if current_user.deriv_date:
         grid = date_utils.round_vals_from_date(dates['date'],
-                                               current_user.deriv_date.date())
+                                               deriv_date=current_user.deriv_date.date(),
+                                               dob=current_user.dob.date())
         session['deriv_date'] = current_user.deriv_date.strftime('%d-%b-%Y')
     else:
-        grid = date_utils.round_vals_from_date(dates['date'])
+        grid = date_utils.round_vals_from_date(dates['date'], dob=current_user.dob.date())
         session['deriv_date'] = ''
     # Set title
     title = current_user.first_name + " Home"
