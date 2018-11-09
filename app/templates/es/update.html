@@ -30,7 +30,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="text-left"><label for="update-bdate">{{ form.dob.label }}</label></div>
+					<div class="text-left"><label for="update-bdate-es">{{ form.dob.label }}</label></div>
 					<div class="input-group">
 						{{ form.dob(value=current_user.dob.strftime("%m/%d/%Y")) }}
 						<div class="input-group-append">
@@ -47,7 +47,7 @@
 					<div class="text-left"><label for="derivdate-register-es">{{ form.deriv_date.label }}</label></div>
 					<div class="input-group">
 					    {% if current_user.deriv_date %}
-						    {{ form.deriv_date(value=current_user.deriv_date.strftime("%m/%d/%Y")) }}
+						    {{ form.deriv_date(value=current_user.deriv_date.strftime("%d/%m/%Y")) }}
 						{% else %}
 						    {{ form.deriv_date }}
 						{% endif %}
