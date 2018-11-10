@@ -13,6 +13,8 @@ SQL_DB_URI = SQL_DB_URI.format(
 
 # Config object with all settings
 class Config(object):
+    # Basedir
+    BASEDIR = basedir
     # CSRF
     SECRET_KEY = (os.environ.get('SECRET_KEY') or 'a_secret_key')
     # Debug
