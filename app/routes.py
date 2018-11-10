@@ -146,9 +146,9 @@ def diagrams():
     images = os.listdir(os.path.join(app.config['BASEDIR'], 'app', 'static', 'diagrams'))
     imgs_idx = [(int(i[:i.find('__')]), i) for i in images]
     imgs_sorted = sorted(imgs_idx, key=lambda tup: tup[0])
-    img_names = [i[1][i[1].find('__') + 2:] for i in imgs_sorted]
-    img_names = img_names[::-1]
-    return render_template('es/diagrams.html', images=img_names)
+    img_names = [(i[1], i[1][i[1].find('__') + 2:i[1].find('.')]) for i in imgs_sorted]
+    img_tuples = img_names[::-1]
+    return render_template('es/diagrams.html', images=img_tuples)
 
 
 # Login to the website

@@ -7,11 +7,11 @@
     <div class="col-md-6 col-lg-4 mt-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-center">{{img[:img.find('.')]}}</h5>
+                <h5 class="card-title text-center">{{img[1]}}</h5>
                 <hr>
             </div>
-            <a href="{{url_for('static', filename='diagrams/'+img)}}" target="_blank">
-                <img class="card-img-bottom" src="{{url_for('static', filename='diagrams/'+img)}}" alt="{{img}}">
+            <a href="{{url_for('static', filename='diagrams/'+img[0])}}" target="_blank">
+                <img class="card-img-bottom" src="{{url_for('static', filename='diagrams/'+img[0])}}" alt="{{img[1]}}">
             </a>
         </div>
     </div>
