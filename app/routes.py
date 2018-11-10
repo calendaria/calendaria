@@ -144,7 +144,11 @@ def quadrant_es(year, daynbr):
 @login_required
 def diagrams():
     images = os.listdir(os.path.join(app.config['BASEDIR'], 'app', 'static', 'diagrams'))
-    return render_template('es/diagrams.html', images=images)
+    imgs_idx = [(int(i[:i.find('__')]), i) for i in images]
+    imgs_sorted = sorted(imgs_idx, key=lambda tup: tup[0])
+    img_names = [i[1][i[1].find('__') + 2:] for i in imgs_sorted]
+    img_names = img_names[::-1]
+    return render_template('es/diagrams.html', images=img_names)
 
 
 # Login to the website
