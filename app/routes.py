@@ -1,3 +1,4 @@
+import os
 from app import app, db, moment
 from app.models import User
 from flask import (render_template, flash, redirect, url_for,
@@ -136,6 +137,14 @@ def quadrant_es(year, daynbr):
     # Save date in session for export
     session['date_str'] = dates['date'].strftime('%d-%b-%Y')
     return render_template('es/index.html', title=title, dates=dates, grid=grid)
+
+
+# Diagrams
+@app.route('/es/diagrams')
+@login_required
+def diagrams():
+    images = os.listdir(os.path.join(app.config['BASEDIR'], 'app', 'static', 'diagrams'))
+    return render_template('es/diagrams.html', images=images)
 
 
 # Login to the website
