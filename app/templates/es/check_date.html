@@ -1,0 +1,92 @@
+{% extends "es/base.html" %}
+
+{% block content %}
+<!-- Main Titles -->
+<div class="style-jumbo mb-5">
+	<div class="jumbotron text-center mb-3 shadow-lg">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-6 col-md-4">
+				<form action="" method="post" role="form" novalidate>
+					{{ form.hidden_tag() }}
+					<div class="form-group">
+						<div class="input-group">
+							{{ form.checkdate(value=dates['date'].strftime('%d/%m/%Y')) }}
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="material-icons">date_range</i></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-info btn-lg btn-block" id="check-date-btn">Ver</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<p class="lead mt-0">Días de vida: {{ dates['days_alive'] }}</p>
+		<br>
+		{% if not dates['is_rof'] %}
+			<h4>En CALENDARIA</h4>
+			<p class="lead mt-0">La vuelta es: {{ dates['round'] }}</p>
+			<p class="lead mt-0">El cuadrante es: {{ dates['quad_name_es'] }}</p>
+			<p class="lead mt-0">El paso es: {{ dates['step'] }}</p>
+		{% else %}
+			<p class="lead mt-0">Anillo de fuego dia: {{ dates['day_nbr'] }}</p>
+		{% endif %}
+	</div>
+	</div>
+</div>
+
+<!-- Accordion for date values -->
+<div class="container mb-4">
+	<div class="col-sm-4 offset-sm-4 w-20 mt-2 mb-2">
+		<a class="btn btn-info btn-block text-center"  href="{{url_for('quadrant', year=dates['date'].year, daynbr=dates['date'].timetuple().tm_yday)}}">
+			Ver por cuadrante
+		</a>
+	</div>
+	<div class="accordion" id="accordionDateVals">
+	    <div class="card">
+		    <div class="card-header" id="headingOne">
+		        <h5 class="mb-0">
+		            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+		                Calendaria ({{dates['date'].strftime('%d/%m/%Y')}})
+		            </button>
+		        </h5>
+		    </div>
+		    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionDateVals">
+		        <div class="card-body">
+		            {% include "es/_caldate_vals.html" %}
+		        </div>
+		    </div>
+
+			<div class="card-header" id="headingThree">
+		        <h5 class="mb-0">
+		            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+		                Aparatos ({{dates['date'].strftime('%d/%m/%Y')}})
+		            </button>
+		        </h5>
+		    </div>
+		    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionDateVals">
+		        <div class="card-body">
+		            {% include "es/_appdate_vals.html" %}
+		        </div>
+		    </div>
+
+		    <div class="card-header" id="headingTwo">
+		        <h5 class="mb-0">
+		            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+		                Contadores Personales ({{dates['date'].strftime('%d/%m/%Y')}})
+		            </button>
+		        </h5>
+		    </div>
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionDateVals">
+		        <div class="card-body">
+		            {% include "es/_countdate_vals.html" %}
+		        </div>
+		    </div>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
