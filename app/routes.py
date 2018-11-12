@@ -6,7 +6,7 @@ from flask import (render_template, flash, redirect, url_for,
 from app.forms import (LoginForm, LoginESForm, RegistrationForm,
                        RegistrationESForm, UpdateProfileForm,
                        UpdateProfileESForm, ResetPasswordForm, ResetPasswordESForm,
-                       ResetPasswordRequestForm, ResetPasswordRequestESForm)
+                       ResetPasswordRequestForm, ResetPasswordRequestESForm, CheckDateESForm)
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.util import date_utils
@@ -149,6 +149,26 @@ def diagrams():
     img_names = [(i[1], i[1][i[1].find('__') + 2:i[1].find('.')]) for i in imgs_sorted]
     img_tuples = img_names[::-1]
     return render_template('es/diagrams.html', images=img_tuples)
+
+
+# Check date details
+@app.route('/es/check_date', methods=['GET', 'POST'])
+@login_required
+def check_date():
+    # Get user's local time by using IPstack API
+    tz = get_tz(IPSTACK_API_KEY, request=request)
+    # Set the locale based on language to display the right language for dates
+    locale.setlocale(locale.LC_TIME, ES_LC)
+    # Create form
+    form = CheckDateESForm()
+    if form.validate_on_submit():
+        # Get date from form
+        d = form.checkdate.data
+    else:
+        # Get today's date
+        d = set_tz_today(tz)
+    dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date(), dob=current_user.dob.date())
+    return render_template('es/check_date.html', form=form, dates=dates)
 
 
 # Login to the website

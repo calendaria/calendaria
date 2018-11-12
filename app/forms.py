@@ -138,6 +138,16 @@ class RegistrationESForm(FlaskForm):
 			raise ValidationError('La contraseña debe de tener al menos 8 caracteres.')
 
 
+# Check date in spanish
+class CheckDateESForm(FlaskForm):
+	checkdate = DateField('Fecha de nacimiento',
+					validators=[DataRequired()],
+					render_kw={"class": "form-control",
+							   "id": "check-date-es",
+							   "placeholder": "dd/mm/yyyy",
+							   "onkeypress": "return false"},
+					format="%d/%m/%Y")
+
 # Update the profile information
 class UpdateProfileForm(FlaskForm):
 	email = StringField('Email address',
