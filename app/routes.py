@@ -1,12 +1,12 @@
 import os
 from app import app, db, moment
-from app.models import User
+from app.models import User, Article
 from flask import (render_template, flash, redirect, url_for,
                    request, make_response, session)
 from app.forms import (LoginForm, LoginESForm, RegistrationForm,
                        RegistrationESForm, UpdateProfileForm,
                        UpdateProfileESForm, ResetPasswordForm, ResetPasswordESForm,
-                       ResetPasswordRequestForm, ResetPasswordRequestESForm, CheckDateESForm)
+                       ResetPasswordRequestForm, ResetPasswordRequestESForm, CheckDateESForm, ArticleESForm)
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.util import date_utils
@@ -169,6 +169,37 @@ def check_date():
         d = set_tz_today(tz)
     dates = date_utils.date_vals(d, deriv_date=current_user.deriv_date.date(), dob=current_user.dob.date())
     return render_template('es/check_date.html', form=form, dates=dates)
+
+
+# View articles
+@app.route('/es/articles')
+@login_required
+def articles():
+    articles = Article.query.order_by(Article.timestamp.desc()).all()
+    return render_template('es/articles.html', articles=articles)
+
+
+# Create new article
+@app.route('/es/new_article', methods=['GET', 'POST'])
+@login_required
+def new_article():
+    form = ArticleESForm()
+    if request.method == 'POST':
+        new_article = Article(title=form.title.data,
+                              subtitle=form.subtitle.data,
+                              author=form.author.data,
+                              body=form.body.data)
+        db.session.add(new_article)
+        db.session.commit()
+    return render_template('es/new_article.html', form=form)
+
+
+# View particular article
+@app.route('/es/article/<int:article_id>')
+@login_required
+def article(article_id):
+    article = Article.query.get(article_id)
+    return render_template('es/_article.html', article=article)
 
 
 # Login to the website

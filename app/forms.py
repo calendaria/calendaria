@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, DateField
+from wtforms import StringField, PasswordField, BooleanField, DateField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -147,6 +147,19 @@ class CheckDateESForm(FlaskForm):
 							   "placeholder": "dd/mm/yyyy",
 							   "onkeypress": "return false"},
 					format="%d/%m/%Y")
+
+
+# Check date in spanish
+class ArticleESForm(FlaskForm):
+	title = StringField('Titulo', validators=[DataRequired()],
+		render_kw={"class": "form-control", "id": "new-article-title"})
+	subtitle = StringField('Subtitulo', validators=[DataRequired()],
+		render_kw={"class": "form-control", "id": "new-article-subtitle"})
+	author = StringField('Autor', validators=[DataRequired()],
+		render_kw={"class": "form-control", "id": "new-article-author"})
+	body = TextAreaField('Autor', validators=[DataRequired()],
+		render_kw={"class": "form-control", "id": "new-article-body"})
+
 
 # Update the profile information
 class UpdateProfileForm(FlaskForm):

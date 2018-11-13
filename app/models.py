@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from time import time
 import jwt
+from datetime import datetime
 
 
 # User Class for ORM
@@ -37,10 +38,24 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User: {} {} ({})>'.format(self.first_name,
-		    self.dob.strftime('%m/%d/%Y'), self.email)
+                                           self.dob.strftime('%m/%d/%Y'), self.email)
 
 
 # Set the user id to track the user currently online
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
+
+
+# Articles
+class Article(db.Model):
+    __tablename__='articles'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250))
+    subtitle = db.Column(db.String(500))
+    body = db.Column(db.String(20000))
+    author = db.Column(db.String(250))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return "<Post {}>".format(self.title)

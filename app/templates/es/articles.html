@@ -1,0 +1,21 @@
+{% extends "es/base.html" %}
+
+{% block content %}
+<h1>Articulos</h1>
+<div class="row">
+    <div class="mt-4 col-12">
+        {% for article in articles %}
+        <div class="card">
+            <a class="btn btn-link text-left card-link" href="{{url_for('article', article_id=article.id)}}">
+                <div class="card-body">
+                    <h3 class="card-title">{{article.title}}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">{{article.subtitle}}</h6>
+                    <p class="text-muted" style="font-size: 0.8rem;">Por <em>{{article.author}} ({{article.timestamp.strftime('%d/%m/%Y')}})</em></p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
