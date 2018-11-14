@@ -3,7 +3,7 @@
 {% block content %}
 <h1 class="mt-2">{{article.title}}</h1>
 <h4 class="mt-2">{{article.subtitle}}</h4>
-<p class="text-muted" style="font-size: 0.8rem;">{{article.author}} ({{article.timestamp.strftime('%d/%m/%Y')}})</p>
+<p class="text-muted" style="font-size: 0.8rem;">{{article.author}} <em>({{article.timestamp.strftime('%d/%m/%Y')}})</em></p>
 <hr>
 {{article.body|safe}}
 <a class="btn btn-info" href="{{url_for('articles')}}">Volver a articulos</a>

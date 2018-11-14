@@ -157,7 +157,7 @@ class ArticleESForm(FlaskForm):
 		render_kw={"class": "form-control", "id": "new-article-subtitle"})
 	author = StringField('Autor', validators=[DataRequired()],
 		render_kw={"class": "form-control", "id": "new-article-author"})
-	body = TextAreaField('Autor', validators=[DataRequired()],
+	body = TextAreaField('Texto', validators=[DataRequired()],
 		render_kw={"class": "form-control", "id": "new-article-body"})
 
 
