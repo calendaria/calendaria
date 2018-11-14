@@ -184,7 +184,7 @@ def articles():
 @login_required
 def new_article():
     form = ArticleESForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         new_article = Article(title=form.title.data,
                               subtitle=form.subtitle.data,
                               author=form.author.data,
@@ -210,12 +210,18 @@ def delete_article(article_id):
 
 
 # Delete article (superuser only)
-@app.route('/es/edit_article/<int:article_id>')
+@app.route('/es/edit_article/<int:article_id>', methods=['GET', 'POST'])
 @login_required
 def edit_article(article_id):
     form = ArticleESForm()
+    article = Article.query.get(article_id)
     if current_user.superuser:
-        article = Article.query.get(article_id)
+        if form.validate_on_submit():
+            article.title = form.title.data
+            article.subtitle = form.subtitle.data
+            article.body = form.body.data
+            db.session.commit()
+            return redirect(url_for('articles'))
     else:
         flash('Ud. no puede realizar esta accion')
         return redirect(url_for('articles'))
