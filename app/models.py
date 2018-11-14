@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     dob = db.Column(db.DateTime, index=True)
     deriv_date = db.Column(db.DateTime, index=True)
     password_hash = db.Column(db.String(128))
+    superuser = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

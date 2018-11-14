@@ -69,6 +69,23 @@
 							</div>
 						</li>
 
+						{% if current_user.superuser %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle mr-3"
+							   href="#" id="adminDropdown"
+							   role="button"
+							   data-toggle="dropdown"
+							   aria-haspopup="true" aria-expanded="false"
+							   style="color: white;">
+								Admin
+							</a>
+							<div class="dropdown-menu" aria-labelledby="adminDropdown">
+								<a class="dropdown-item" href="{{url_for('users')}}">Usuarios</a>
+								<a class="dropdown-item" href="{{url_for('new_article')}}">Nuevo articulo</a>
+							</div>
+						</li>
+						{% endif %}
+
 						<li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">
 							Salir</a>
 						</li>

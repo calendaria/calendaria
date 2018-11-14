@@ -215,6 +215,41 @@ class UpdateProfileESForm(FlaskForm):
 			"id": "update-fname"})
 
 
+# Update the profile information spanish
+class AdminUpdateProfileForm(FlaskForm):
+	email = StringField('Email',
+		validators=[DataRequired(), Email('Invalid email')],
+		render_kw={"placeholder": "email",
+			"class": "form-control",
+			"id": "admin-email"})
+
+	dob = DateField('DOB',
+		validators=[DataRequired()],
+		render_kw={"class": "form-control",
+			"id": "admin-bday-es",
+			"placeholder": "dd/mm/yyyy",
+			"onkeypress": "return false"},
+		format="%d/%m/%Y")
+
+	deriv_date = DateField('Deriv Date',
+		validators=[DataRequired()],
+		render_kw={"class": "form-control",
+			"id": "admin-derivdate-es",
+			"placeholder": "dd/mm/yyyy",
+			"onkeypress": "return false"},
+		format="%d/%m/%Y")
+
+	first_name = StringField('Name',
+		validators=[DataRequired()],
+		render_kw={"placeholder": "primer nombre",
+			"class": "form-control",
+			"id": "admin-fname"})
+
+	superuser = BooleanField('Superuser',
+		render_kw={"class": "form-check-input",
+					"id": "admin-superuser"})
+
+
 # Reset Password request
 class ResetPasswordRequestForm(FlaskForm):
 	email = StringField('Email address',

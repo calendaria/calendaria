@@ -5,7 +5,7 @@ from flask import (render_template, flash, redirect, url_for,
                    request, make_response, session)
 from app.forms import (LoginForm, LoginESForm, RegistrationForm,
                        RegistrationESForm, UpdateProfileForm,
-                       UpdateProfileESForm, ResetPasswordForm, ResetPasswordESForm,
+                       UpdateProfileESForm, ResetPasswordForm, ResetPasswordESForm, AdminUpdateProfileForm,
                        ResetPasswordRequestForm, ResetPasswordRequestESForm, CheckDateESForm, ArticleESForm)
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -488,6 +488,30 @@ def download_csv():
     output.headers["Content-Disposition"] = "attachment; filename=calendaria.csv"
     output.headers["Content-type"] = "text/csv"
     return output
+
+
+# User list (admin only)
+@app.route('/users')
+@login_required
+def users():
+    users = User.query.all()
+    return render_template('es/users.html', users=users)
+
+
+# Modify a particular user (admin only)
+@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def user(user_id):
+    user = User.query.get(user_id)
+    form = AdminUpdateProfileForm()
+    if form.validate_on_submit():
+        user.first_name = form.first_name.data
+        user.email = form.email.data
+        user.dob = form.dob.data
+        user.deriv_date = form.deriv_date.data
+        user.superuser = form.superuser.data
+        db.session.commit()
+    return render_template('es/_user.html', user=user, form=form)
 
 
 # Test view

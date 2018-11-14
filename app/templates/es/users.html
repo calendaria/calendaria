@@ -1,0 +1,17 @@
+{% extends "es/base.html" %}
+
+{% block content %}
+<h1>User List</h1>
+<div class="row">
+    <div class="mt-4 col-12">
+        <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <a href="{{url_for('user', user_id=user.id)}}" class="btn btn-link">{{user.first_name}}: {{user.email}} ({{user.dob.strftime('%d-%b-%Y')}})</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
