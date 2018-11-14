@@ -1,0 +1,84 @@
+{% extends "es/base.html" %}
+
+{% block links %}
+{{ super() }}
+<!-- include summernote css/js -->
+<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
+<!-- Froala -->
+<!-- Include external CSS. -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+<!-- Include Editor style. -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.0/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<!-- Login -->
+<div class="mt-3">
+	<h2 class="mb-2">Editar Articulo:</h2>
+</div>
+		<form action="" method="post" role="form" novalidate>
+			{{ form.hidden_tag() }}
+			<div class="form-group">
+				<div class="text-left"><label for="new-article-title">{{ form.title.label }}</label></div>
+					{{ form.title(value=article.title) }}
+					<div>
+						{% for error in form.title.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left">
+						<label for="new-article-subtitle">{{ form.subtitle.label }}</label>
+						{{ form.subtitle(value=article.subtitle) }}
+					</div>
+					<div>
+						{% for error in form.subtitle.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left">
+						<label for="new-article-author">{{ form.author.label }}</label>
+						{{ form.author(value=article.author) }}
+					</div>
+					<div>
+						{% for error in form.author.errors %}
+							<span style="color: red;">{{ error }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="text-left"><label for="new-article-body">{{ form.body.label }}</label></div>
+					<div class="input-group h-50">
+						<!-- <textarea id="new-article-body" name="new-article-body"></textarea> -->
+						{{ form.body }}
+					</div>
+				</div>
+				<div class="form-group">
+               		<button type="submit" class="btn btn-info" id="edit-button">Crear</button>
+            	</div>
+        	</div>
+		</form>
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+<!-- Summernote -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script> -->
+<!-- Froala -->
+<!-- Include external JS libs. -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+<!-- Include Editor JS files. -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.0/js/froala_editor.pkgd.min.js"></script>
+<script>
+	$(function() { $('#new-article-body').froalaEditor() });
+</script>
+{% endblock %}

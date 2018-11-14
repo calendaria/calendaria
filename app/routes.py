@@ -179,7 +179,7 @@ def articles():
     return render_template('es/articles.html', articles=articles)
 
 
-# Create new article
+# Create new article (superuser only)
 @app.route('/es/new_article', methods=['GET', 'POST'])
 @login_required
 def new_article():
@@ -191,7 +191,35 @@ def new_article():
                               body=form.body.data)
         db.session.add(new_article)
         db.session.commit()
+        return redirect(url_for('articles'))
     return render_template('es/new_article.html', form=form)
+
+
+# Delete article (superuser only)
+@app.route('/es/delete_article/<int:article_id>')
+@login_required
+def delete_article(article_id):
+    if current_user.superuser:
+        article = Article.query.get(article_id)
+        db.session.delete(article)
+        db.session.commit()
+    else:
+        flash('Ud. no puede realizar esta accion')
+        return redirect(url_for('articles'))
+    return redirect(url_for('articles'))
+
+
+# Delete article (superuser only)
+@app.route('/es/edit_article/<int:article_id>')
+@login_required
+def edit_article(article_id):
+    form = ArticleESForm()
+    if current_user.superuser:
+        article = Article.query.get(article_id)
+    else:
+        flash('Ud. no puede realizar esta accion')
+        return redirect(url_for('articles'))
+    return render_template('es/edit_article.html', article=article, form=form)
 
 
 # View particular article
