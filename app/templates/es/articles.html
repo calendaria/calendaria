@@ -10,9 +10,15 @@
                 <div class="card-body">
                     <h3 class="card-title">{{article.title}}</h3>
                     <h6 class="card-subtitle mb-2 text-muted">{{article.subtitle}}</h6>
-                    <p class="text-muted" style="font-size: 0.8rem;">Por <em>{{article.author}} ({{article.timestamp.strftime('%d/%m/%Y')}})</em></p>
+                    <p class=" card-text text-muted" style="font-size: 0.8rem;">Por {{article.author}} <em>({{article.timestamp.strftime('%d/%m/%Y')}})</em></p>
                 </div>
             </a>
+            {% if current_user.superuser %}
+            <div class="row ml-4">
+                <a href="#" class="card-link mb-2"><i class="material-icons">delete</i></a>
+                <a href="#" class="card-link mb-2"><i class="material-icons">edit</i></a>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
