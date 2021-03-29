@@ -34,7 +34,7 @@ psycopg2==2.7.5
 ptyprocess==0.6.0
 pyexcel==0.5.9.1
 pyexcel-io==0.5.9.1
-Pygments==2.2.0
+Pygments==2.7.4
 PyJWT==1.6.4
 python-dateutil==2.7.3
 python-dotenv==0.9.1
